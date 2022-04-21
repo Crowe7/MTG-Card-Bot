@@ -9,5 +9,5 @@ export interface Command {
     | SlashCommandSubcommandsOnlyBuilder;
     run: (interaction: CommandInteraction) => Promise<void>;
 }
-
+// Put all commands here
 export const Commands:Command[] = [CardInfo];

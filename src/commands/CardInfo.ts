@@ -3,28 +3,29 @@ import { MessageEmbed } from 'discord.js';
 
 import { Command } from '../AllCommands';
 
+const CardFetch = new SlashCommandBuilder()
+    .setName("cardfetch")
+    .setDescription("Fetches card info from Scryfall.")
+    .addStringOption((option) =>
+        option
+            .setName("cardname")
+            .setDescription("Name of the card you want to display info from.")
+            .setRequired(true)
+);
+
+
 export const CardInfo: Command =  {
-    data: new SlashCommandBuilder()
-        .setName("Card Fetch")
-        .setDescription("Displays card information of the card name entered.")
-        .addStringOption((option) => 
-            option
-                .setName("Card Name")
-                .setDescription("Name of the card you want to look up")
-                .setRequired(true)
-        ),
+    data: CardFetch,
     run: async (interaction) => {
         await interaction.deferReply();
-        const { user } = interaction;
-        const text = interaction.options.getString("Card Name", true);
+        const text = interaction.options.getString("cardname", true);
         // THis is where we will query the data base for the card we look up
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle(text)
-        await interaction.editReply({ embeds: [embed]});
+        await interaction.editReply({embeds: [embed]});
     }
 }
-
 
 
 
