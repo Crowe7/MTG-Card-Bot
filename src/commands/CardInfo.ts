@@ -28,12 +28,22 @@ export const CardInfo: Command =  {
         if(card.status === 404) {
             interaction.editReply(`**No card found matching ${text}**`);
         } else {
-            console.log(card.name);
+            console.log(card)
+            console.log(card.image_uris);
             // need to display error message if name doesnt exist.. change set title maybe to display it?
             // THis is where we will query the data base for the card we look up
             const embed = new MessageEmbed()
                 .setColor('#0099ff')
-                .setTitle(card.name);
+                .setTitle(card.name)
+                .setURL(card.scryfall_uri)
+                .setDescription(card.oracle_text)
+                .setFields (
+                    { name: 'CMC', value: `**${card.cmc}**`, inline: true},
+                    { name: 'Type', value: `**${card.type_line}**`, inline: true},
+                    { name: 'Rarity', value: `**${card.rarity}**`, inline: true},
+                )
+                .setImage(card.image_uris.border_crop)
+                .setFooter({ text: `Price: $${card.prices.usd}`})
             await interaction.editReply({embeds: [embed]});
         }
     }
