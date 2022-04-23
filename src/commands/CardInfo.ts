@@ -22,19 +22,17 @@ export const CardInfo: Command =  {
         await interaction.deferReply();
         let text: string = interaction.options.getString("cardname", true);
         // Removes spaces
-        text = text.replace(/\s+/g, '');
+        let textDespaced = text.replace(/\s+/g, '');
 
-        const cards = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${text}`)
+        const cards = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${textDespaced}`)
             .then(response => response.json());
         const firstCardMatch:string = cards.data[0];
 
-        console.log(firstCardMatch);
-
         const query = new URLSearchParams(firstCardMatch);
-        console.log(query);
         const card = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${query}`)
             .then(response => response.json());
-        if(card.status === 404) {
+            console.log(card)
+        if(card.status === 404 || card.status === 400) {
             interaction.editReply(`**No card found matching ${text}**`);
         } else {
             console.log(card)
