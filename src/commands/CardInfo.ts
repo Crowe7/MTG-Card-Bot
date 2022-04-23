@@ -24,11 +24,17 @@ export const CardInfo: Command =  {
         const query = new URLSearchParams({ text });
         const card = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${query}`)
             .then(response => response.json());
-        console.log(card);
-        // THis is where we will query the data base for the card we look up
-        const embed = new MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle(card.name);
-        await interaction.editReply({embeds: [embed]});
+        console.log(card.status);
+        if(card.status === 404) {
+            interaction.editReply(`**No card found matching ${text}**`);
+        } else {
+            console.log(card.name);
+            // need to display error message if name doesnt exist.. change set title maybe to display it?
+            // THis is where we will query the data base for the card we look up
+            const embed = new MessageEmbed()
+                .setColor('#0099ff')
+                .setTitle(card.name);
+            await interaction.editReply({embeds: [embed]});
+        }
     }
 }
