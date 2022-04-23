@@ -20,7 +20,7 @@ export const CardInfo: Command =  {
     data: CardFetch,
     run: async (interaction) => {
         await interaction.deferReply();
-        const text = interaction.options.getString("cardname", true);
+        const text: string = interaction.options.getString("cardname", true);
         const query = new URLSearchParams({ text });
         const card = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${query}`)
             .then(response => response.json());
@@ -29,7 +29,13 @@ export const CardInfo: Command =  {
             interaction.editReply(`**No card found matching ${text}**`);
         } else {
             console.log(card)
-            console.log(card.image_uris);
+
+            let price: number = 0;
+            if(card.prices.usd === null) {
+                price = card.prices.usd_foil;
+            } else {
+                price = card.prices.usd;
+            }
             // need to display error message if name doesnt exist.. change set title maybe to display it?
             // THis is where we will query the data base for the card we look up
             const embed = new MessageEmbed()
@@ -43,7 +49,7 @@ export const CardInfo: Command =  {
                     { name: 'Rarity', value: `**${card.rarity}**`, inline: true},
                 )
                 .setImage(card.image_uris.border_crop)
-                .setFooter({ text: `Price: $${card.prices.usd}`})
+                .setFooter({ text: `Price: $${price}`})
             await interaction.editReply({embeds: [embed]});
         }
     }
