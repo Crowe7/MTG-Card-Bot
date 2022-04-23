@@ -1,6 +1,6 @@
 
 import { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from '@discordjs/builders';
-import { CommandInteraction } from 'discord.js';
+import { Client, CommandInteraction } from 'discord.js';
 import {CardInfo} from './commands/CardInfo'
 
 export interface Command {
@@ -11,3 +11,4 @@ export interface Command {
 }
 // Put all commands here
 export const Commands:Command[] = [CardInfo];
+

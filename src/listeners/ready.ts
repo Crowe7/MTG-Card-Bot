@@ -11,7 +11,6 @@ export default (client: Client): void => {
             process.env.TOKEN as string
         );
         const commandData = Commands.map((command) => command.data.toJSON());
-
         await rest.put(
             Routes.applicationGuildCommands(
                 client.user.id,
