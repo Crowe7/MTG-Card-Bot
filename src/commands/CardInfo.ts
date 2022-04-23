@@ -20,11 +20,20 @@ export const CardInfo: Command =  {
     data: CardFetch,
     run: async (interaction) => {
         await interaction.deferReply();
-        const text: string = interaction.options.getString("cardname", true);
-        const query = new URLSearchParams({ text });
+        let text: string = interaction.options.getString("cardname", true);
+        // Removes spaces
+        text = text.replace(/\s+/g, '');
+
+        const cards = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${text}`)
+            .then(response => response.json());
+        const firstCardMatch:string = cards.data[0];
+
+        console.log(firstCardMatch);
+
+        const query = new URLSearchParams(firstCardMatch);
+        console.log(query);
         const card = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${query}`)
             .then(response => response.json());
-        console.log(card.status);
         if(card.status === 404) {
             interaction.editReply(`**No card found matching ${text}**`);
         } else {
@@ -38,6 +47,7 @@ export const CardInfo: Command =  {
             }
             // need to display error message if name doesnt exist.. change set title maybe to display it?
             // THis is where we will query the data base for the card we look up
+            console.log(query);
             const embed = new MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle(card.name)
