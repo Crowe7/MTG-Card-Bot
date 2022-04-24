@@ -32,7 +32,10 @@ export const CardInfo: Command =  {
         const card = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${query}`)
             .then(response => response.json());
         if(card.status === 404 || card.status === 400) {
-            interaction.editReply(`**No card found matching ${text}**`);
+            interaction.deleteReply()
+            setTimeout(() => {
+                interaction.followUp({ content: `**No card found matching ${text}**`, ephemeral: true});
+            }, 100)
         } else {
             //This is for price displaying null if card is printed in foil only
             let price: number = 0;
@@ -41,17 +44,17 @@ export const CardInfo: Command =  {
             } else {
                 price = card.prices.usd;
             };
-
+            // sends 2 messages if card has multiple parts 
             if('card_faces' in card) {
                 for(let i = 0; i < card.card_faces.length; i++) {
-                    
+                    // Changes image if the back of the card is diffrent
                     let cardImage:string = ''
                     if(`image_uris` in card.card_faces[i]) {
                         cardImage = card.card_faces[i].image_uris.border_crop
                     } else {
                         cardImage = card.image_uris.border_crop;
                     }
-                    console.log('e')
+
                     const embed = new MessageEmbed()
                         .setColor('#0099ff')
                         .setTitle(card.card_faces[i].name)
@@ -71,11 +74,6 @@ export const CardInfo: Command =  {
                     }
                 }
             } else {
-                console.log(card)
-
-                // need to display error message if name doesnt exist.. change set title maybe to display it?
-                // THis is where we will query the data base for the card we look up
-                console.log(query);
                 const embed = new MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(card.name)
