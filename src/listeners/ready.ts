@@ -12,9 +12,8 @@ export default (client: Client): void => {
         );
         const commandData = Commands.map((command) => command.data.toJSON());
         await rest.put(
-            Routes.applicationGuildCommands(
+            Routes.applicationCommands(
                 client.user.id,
-                process.env.SERVER_ID as string
             ),
             {body: commandData}
         )
