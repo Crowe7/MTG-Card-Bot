@@ -22,7 +22,7 @@ export const CardInfo: Command =  {
         await interaction.deferReply();
         let text: string = interaction.options.getString("cardname", true);
         // Removes spaces
-        let textDespaced = text.replace(/\s+/g, '');
+        let textDespaced: string = text.replace(/\s+/g, '');
 
         const cards = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${textDespaced}`)
             .then(response => response.json());
@@ -33,6 +33,7 @@ export const CardInfo: Command =  {
             .then(response => response.json());
         if(card.status === 404 || card.status === 400) {
             interaction.deleteReply()
+            // had to wrap in a set timeout to get the message to not delete itself from above
             setTimeout(() => {
                 interaction.followUp({ content: `**No card found matching ${text}**`, ephemeral: true});
             }, 100)
