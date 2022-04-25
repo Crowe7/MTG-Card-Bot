@@ -16,6 +16,13 @@ Shows [Scryfall](https://scryfall.com) info, card effect, price and more!
 
 ![Example](/example_gif/example.gif)
 
+## Built With
+
+- [TypeScript](https://www.typescriptlang.org/)
+- [Nodejs](https://nodejs.dev/)
+- [Discord.js](https://discord.js.org/#/)
+
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
