@@ -5,11 +5,13 @@ import 'dotenv/config'
 import { Routes } from "discord-api-types/v10";
 
 export default (client: Client): void => {
+    // Porbably add a mongoose connnect function database folder then import here and call it.
     client.on("ready", async () => {
         if(!client.user || !client.application) {return}
         const rest = new REST({ version: "9" }).setToken(
             process.env.TOKEN as string
         );
+        // this clears all set commands  | client.application.commands.set([]);
         const commandData = Commands.map((command) => command.data.toJSON());
         await rest.put(
             Routes.applicationCommands(
