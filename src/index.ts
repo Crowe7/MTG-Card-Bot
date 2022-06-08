@@ -32,16 +32,25 @@ client.login(TOKEN);
     CREATE A FUCNTION THAT STRIPS ALL SPACES AND FORCES LOWERCASE
 
     THEN QUERY THE DATABASE FOR EITHER 
+        maybe run all at the same time and then check if any of the values contain anything. function returns either blank or the json for the card data
+        
+        have this check each card and inside of each card have it check the card instances for matching set if card name matcheas
         1. WE CALL THE API FOR AUTO COMPLETE THEN CHECK IF DATABSE CONTAINS CARD THAT IS IN THE FIRST SLOT
         2. WRITE SOME REGEX TO SEARCH FOR ANY SINGLE CARD IN THE CARD COLLECTION IN THE DB THAT CONTAINS THOSE CHARACTERS 
             THEN RETURN AN ARRAY ALL THAT MATCH
-                IF NON EXISTANT FETCH FROM API
+                IF NON EXISTANT FETCH FROM API USING THIS https://scryfall.com/docs/api/cards/collection
+                    that allows us to save every single set tied to the card at once
+                    and if still not existant then add it to a non existant cards collection
                 IF ONLY ONE RETURN IT
                 IF MULTIPLE RUN FILTER TO RETURN THE ONE THAT MATCHES THE SET THEN DISPLAY THAT ONE... maybe save card as a card instance stored inside of the actual card collection
                     Save card name first as an item in the card collection... then add the card to the card instances collection refrenceing the card objectid itself
                     card instances have sets, image link, price, description, type, rarity, CMC and if it has card faces save those inside as well
                         have a card faces type and add that onto the card if it does have any faces
-    
+                    
+    have the api calling function call modal save for if card exists or not, if it does fill in the feilds and save to the db if it doesnt save name to non existant model
+
+
+
     BUILD OUT NODE BACKEND FOR FETCHING STORED DATA IN DATABASE
 
     LOOK INTO AND USE CRONJOBS TO RUN THE CACHE METHOD EVERY 24 HOURS TO GET ACCURATE PRICES

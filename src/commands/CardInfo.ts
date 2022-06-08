@@ -36,6 +36,9 @@ export const CardInfo: Command =  {
             setName = '';
         }
 
+        // call function that checks databases, if empty call new one to pull from api. use below to make the api calling one
+        //  
+
 
         const cards = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${textDespaced}`)
             .then(response => response.json());
@@ -45,11 +48,15 @@ export const CardInfo: Command =  {
         const query = new URLSearchParams(firstCardMatch);
 
         const returnCardInfo = async () => {
-                
+                // let card = await fetchCardFromDB(query, setName) if(setName) const card =  cardsDB.filter.cardinstance...  return card.filter(set: setName) ... else return card[0]
             const card = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${query}&set=${setName}`)
                 .then(response => response.json());
             console.log(card);
+                // if(!card)
             if(card.status === 404 || card.status === 400) {
+                // card = await fetchCard(query, setName) throw most of this junk in here
+                    // if (!card) the run the interaction followup 
+
                 if(setName !== '') {
                     setName = '';
                     returnCardInfo();
@@ -60,6 +67,7 @@ export const CardInfo: Command =  {
                 setTimeout(() => {
                     interaction.followUp({ content: `**No card found matching ${text}**`, ephemeral: true});
                 }, 100)
+            //remove else 
             } else {
                 //This is for price displaying null if card is printed in foil only
                 let price: number = 0;
