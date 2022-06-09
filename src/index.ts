@@ -23,6 +23,15 @@ client.login(TOKEN);
 
 /*
             // CRON JOB TODO
+                    const CronJob = require('../lib/cron.js').CronJob;
+
+                    console.log('Before job instantiation');
+                    const job = new CronJob('0 0 0 * * 6', () => {
+                        await cardModel.collection.drop();
+                        await cardNonExistantModel.collection.drop();
+                    });
+                    console.log('Cache Cleared!');
+                    job.start();
                 HAVE A CRON DROP DROP DATABASE ENTIRELY EVERY WEEK TO CLEAR CACHE.. 
 
     WRITE A METHOD TO CACHE THE DATA FRMO SCRYFALL... THEY HAVE AN API CALL FOR IT
@@ -30,9 +39,36 @@ client.login(TOKEN);
     MAKE A MONGODB DATABASE TO SYNC INTO IT
     
     CREATE A FUCNTION THAT STRIPS ALL SPACES AND FORCES LOWERCASE
+        const stripAndForce = (text) => {
+            let finalText = text.split("").filter(char => char !== char.toUpperCase()).join("");
+        }
 
     THEN QUERY THE DATABASE FOR EITHER 
         maybe run all at the same time and then check if any of the values contain anything. function returns either blank or the json for the card data
+            word is what is passed into the command as a name
+        
+        const match = new RegExp(`^${word}.*$`);
+            cardModel.findOne({ "name": { $regex: regexVariable} }, 
+                (err, card) => {
+                    if (err) return handleErr(err);
+                    if (!setName) {
+                        return card.printing[0]
+                    }
+                    let correctCardPrinting = card.printing.filter(printing => printing.set === setName);
+
+                    if(!correctCardPrinting) {
+                        return card.printing[0];
+                    }
+                    return correctCardPrinting;
+                }
+            )
+            cardNonExistanceModel.findOne({ "name": { $regex: regexVariable} }, 
+                (err, card) => {
+                    if (err) return handleErr(err);
+                    return card;
+                }
+            )
+
         
         have this check each card and inside of each card have it check the card instances for matching set if card name matcheas
         1. WE CALL THE API FOR AUTO COMPLETE THEN CHECK IF DATABSE CONTAINS CARD THAT IS IN THE FIRST SLOT
@@ -53,7 +89,7 @@ client.login(TOKEN);
 
     BUILD OUT NODE BACKEND FOR FETCHING STORED DATA IN DATABASE
 
-    LOOK INTO AND USE CRONJOBS TO RUN THE CACHE METHOD EVERY 24 HOURS TO GET ACCURATE PRICES
+    LOOK INTO AND USE CRONJOBS TO RUN THE CACHE METHOD EVERY WEEK HOURS TO GET ACCURATE PRICES
 */
 
 // TODO LONG TERM GOALS
