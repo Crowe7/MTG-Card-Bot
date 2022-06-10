@@ -77,6 +77,14 @@ client.login(TOKEN);
         2. WRITE SOME REGEX TO SEARCH FOR ANY SINGLE CARD IN THE CARD COLLECTION IN THE DB THAT CONTAINS THOSE CHARACTERS 
             THEN RETURN AN ARRAY ALL THAT MATCH
                 IF NON EXISTANT FETCH FROM API USING THIS https://api.scryfall.com/cards/search?as=grid&order=released&q=%21"CARDNAMEVARIABLE"+include%3Aextras&unique=prints
+
+                    first fetch using the api that returns array of card names (`https://api.scryfall.com/cards/autocomplete?q=${textDespaced}`
+                    then fill in the first result in above api to pull every printing. then save to the card collections array as
+                    name: "CARDNAME"
+                    sets: "LIST OF ALL PRINTED SETS THE CARD HAS BEEN IN"
+
+
+
                     that allows us to save every single set tied to the card at once
                     and if still not existant then add it to a non existant cards collection
                 IF ONLY ONE RETURN IT
