@@ -16,3 +16,5 @@ export const saveNonValidCard = async (name: string) => {
 
     await cardToSave.save();
 }
+
+export {NoCard}

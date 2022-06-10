@@ -12,10 +12,14 @@ const CardCollectionSChema = new Schema<CardCollectionInterface>({
     sets: [{ type: Schema.Types.ObjectId, ref: 'Card', required: true }]
 });
 
-const NoCard = model<CardCollectionInterface>('Card Printings', CardCollectionSChema);
+const CardCollection = model<CardCollectionInterface>('Card Printings', CardCollectionSChema);
 
+// might need to say cardData is a string as we are just saving the objectId from mongoose
 export const saveCardCollection = async (name: string, cardData: object[]) => {
-    const cardToSave = new NoCard({ name: name, sets: cardData });
+    const cardToSave = new CardCollection({ name: name, sets: cardData });
 
     await cardToSave.save();
 }
+
+export {CardCollection}
+// need to build the cardData first by populating an array with results 
