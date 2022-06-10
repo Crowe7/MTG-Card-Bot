@@ -5,6 +5,7 @@ import express from 'express'
 import interactionCreate from "./listeners/interactionCreate"
 import ready from "./listeners/ready"
 import { Commands } from './AllCommands'
+import { connectToDB } from './database/connectDB'
 const TOKEN = process.env.TOKEN
 
 console.log("Bot Starting...");
@@ -15,6 +16,7 @@ const client = new Client({
 
 
 ready(client);
+connectToDB();
 interactionCreate(client);
 
 client.login(TOKEN);
