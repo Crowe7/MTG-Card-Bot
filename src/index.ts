@@ -76,7 +76,7 @@ client.login(TOKEN);
         1. WE CALL THE API FOR AUTO COMPLETE THEN CHECK IF DATABSE CONTAINS CARD THAT IS IN THE FIRST SLOT
         2. WRITE SOME REGEX TO SEARCH FOR ANY SINGLE CARD IN THE CARD COLLECTION IN THE DB THAT CONTAINS THOSE CHARACTERS 
             THEN RETURN AN ARRAY ALL THAT MATCH
-                IF NON EXISTANT FETCH FROM API USING THIS https://scryfall.com/docs/api/cards/collection
+                IF NON EXISTANT FETCH FROM API USING THIS https://api.scryfall.com/cards/search?as=grid&order=released&q=%21"CARDNAMEVARIABLE"+include%3Aextras&unique=prints
                     that allows us to save every single set tied to the card at once
                     and if still not existant then add it to a non existant cards collection
                 IF ONLY ONE RETURN IT
