@@ -4,3 +4,20 @@
     // if you find a match return that card info
     // if no match just return the first card in the array itself.
     
+
+
+/*
+
+          const cardArr = []
+        await saveCard(fakeCard.name, fakeCard.set, fakeCard);
+
+        let card = await Card.findOne({ name: fakeCard.name }).exec();
+
+        cardArr.push(card?._id as unknown as ObjectId);
+
+        console.log(card)
+        await saveCardCollection(fakeCard.name, cardArr);
+*/
+
+
+// https://stackoverflow.com/questions/26818071/mongoose-schema-hasnt-been-registered-for-model

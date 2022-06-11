@@ -21,4 +21,4 @@ export const saveCard = async (name: string, set: string, details: object) => {
     await cardToSave.save();
 }
 
-export {Card}
+export {Card, CardInterface}
