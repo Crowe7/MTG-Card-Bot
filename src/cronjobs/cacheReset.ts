@@ -8,11 +8,9 @@ import { CardCollection, saveCardCollection } from "../database/models/CardColle
 
 const mongoDB = process.env.MONGO_URI as string;
 
-const collections: (CollectionInfo | Pick<CollectionInfo, "name" | "type">)[] | null | undefined = showCollections();
-
 mongoose 
  .connect(process.env.MONGO_URI as string, {})   
- .then(() => console.log("Database connected!"))
+ .then(() => console.log("Cron Database connected!"))
  .catch(err => console.log(err));
 
  const conn = mongoose.connection
@@ -21,6 +19,8 @@ mongoose
 
     
       conn.on('open',  async () => {
+        const collections: unknown = await showCollections();
 
+        console.log(collections);
         conn.close();
     });
