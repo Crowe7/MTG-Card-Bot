@@ -19,5 +19,14 @@
         await saveCardCollection(fakeCard.name, cardArr);
 */
 
+/*
+
+        let card = await CardCollection.findOne({ name: fakeCard.name }).populate({path: 'sets', model: Card}).exec()
+        if (isCard(card?.sets[0])) {
+            console.log(card?.sets[0].details.name);
+        } else {
+            console.log('Not type card');
+        }
+*/
 
 // https://stackoverflow.com/questions/26818071/mongoose-schema-hasnt-been-registered-for-model
