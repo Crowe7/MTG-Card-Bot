@@ -4,7 +4,7 @@ import { CollectionInfo } from "mongodb";
 
 const mongoDB = process.env.MONGO_URI as string;
 
-export const showCollections = async () => {
+export const showCollections = () => {
     mongoose 
         .connect(process.env.MONGO_URI as string, {})   
         .then(() => console.log(" Collections Database connected!"))
@@ -16,11 +16,13 @@ export const showCollections = async () => {
         conn.on('open', () => {
             conn.db.listCollections().toArray((err, collections) => {
                 if (err) console.log(err);
-                conn.close();
                 res(collections);
+                
+                // otherwise would get a mongo connection pool closed error
+                setTimeout(() => {conn.close()}, 1500);
+                
             });
         });
     });
 }
-
 

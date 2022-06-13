@@ -6,21 +6,38 @@ import { saveNonValidCard } from "../database/models/NoScryfallListing";
 import { saveCard, Card, isCard, } from "../database/models/Card";
 import { CardCollection, saveCardCollection } from "../database/models/CardCollection";
 
-const mongoDB = process.env.MONGO_URI as string;
+function isArray(val: unknown): val is unknown[] {
+  return (
+    Array.isArray(val)
+  );
+}
 
-mongoose 
+const mongoDB = process.env.MONGO_URI as string;
+ export const cacheReset = async () => {
+
+  const collections: unknown  = await showCollections();
+
+  mongoose 
  .connect(process.env.MONGO_URI as string, {})   
  .then(() => console.log("Cron Database connected!"))
  .catch(err => console.log(err));
 
- const conn = mongoose.connection
+ const conn = mongoose.connection;
 
-
-
-    
-      conn.on('open',  async () => {
-        const collections: unknown = await showCollections();
-
-        console.log(collections);
-        conn.close();
+ // for each of the 3 seperate caches we want to clear we check for them and then drop them
+ // those are Card CardCollection and NoScryFallListing
+   
+  // remove any in refactor
+    conn.on('open', () => {
+      if(collections && isArray(collections)) {
+        collections.forEach( (element: any) => {
+          if(element.name === "cards" || element.name === "card printings" || element.name === "non-valid cards") {
+            conn.db.dropCollection(element.name, (err, result) =>{
+              console.log(`Dropped collection ${element.name}`);
+            })
+          }
+        });
+      }
+      conn.close();
     });
+}
