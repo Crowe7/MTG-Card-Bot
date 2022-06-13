@@ -4,7 +4,7 @@
 
 // so we save the card into the db as a card. then take the id of that same card and push that to an array
 // using that array to populate the CardCollection
-const fetchCardAPI = async (name: string, setName: string) => {
+export const fetchCardAPI = async (name: string) => {
     const cardMatches = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${name}`)
         .then(response => response.json());
 

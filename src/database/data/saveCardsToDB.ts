@@ -9,7 +9,7 @@ import { saveNonValidCard } from "../models/NoScryfallListing";
 
     if(!cards) {
         await saveNonValidCard(name);
-        return
+        return;
     }
     else {
         cards.forEach( async (card) => {

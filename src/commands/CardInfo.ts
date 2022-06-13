@@ -4,6 +4,8 @@ import { response } from 'express';
 import fetch from 'node-fetch';
 import { URLSearchParams } from 'node:url';
 import { Command } from '../AllCommands';
+import { stripAndForceLowerCase } from '../data/convertText';
+import { fetchCardAPI } from '../database/data/fetchCard';
 
 const CardFetch = new SlashCommandBuilder()
     .setName("cardfetch")
@@ -28,7 +30,7 @@ export const CardInfo: Command =  {
         await interaction.deferReply();
         let text: string = interaction.options.getString("cardname", true);
         // Removes spaces
-        let textDespaced: string = text.replace(/\s+/g, '');
+        let convertedText: string = stripAndForceLowerCase(text);
 
         let setName: string | null = interaction.options.getString("set", false);
 
@@ -39,18 +41,13 @@ export const CardInfo: Command =  {
         // call function that checks databases, if empty call new one to pull from api. use below to make the api calling one
         //  
 
-
-        const cards = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${textDespaced}`)
-            .then(response => response.json());
-        const firstCardMatch:string = cards.data[0];
-
-
-        const query = new URLSearchParams(firstCardMatch);
-
         const returnCardInfo = async () => {
                 // let card = await fetchCardFromDB(query, setName) if(setName) const card =  cardsDB.filter.cardinstance...  return card.filter(set: setName) ... else return card[0]
-            const card = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${query}&set=${setName}`)
-                .then(response => response.json());
+            //Wrapper function that runs fetch from db... then fetches from api if card isnt present
+
+                const cards: unknown[] = await fetchCardAPI(convertedText);
+            
+
             console.log(card);
                 // if(!card)
             if(card.status === 404 || card.status === 400) {
