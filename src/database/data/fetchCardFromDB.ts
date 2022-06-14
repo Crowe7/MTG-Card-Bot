@@ -22,8 +22,6 @@ import { NoCard } from '../models/NoScryfallListing';
     })
     */
 
-    mongoose.connect(process.env.MONGO_URI as string);   
-    import 'dotenv/config'
 
  export const fetchCardFromDB = async (name:string, setName:string | null) => {
     const card = await CardCollection.findOne({ name: {$regex: matchName(name), $options: 'i'} }).populate({path: 'sets', model: Card}).exec()
@@ -31,24 +29,20 @@ import { NoCard } from '../models/NoScryfallListing';
     if(card) {
         if(!setName) {
             // returns the first card if no set matches.
-            console.log('noset')
             return card.sets[0];
         }
         if (isCard(card.sets[0])) {
-            card.sets.forEach((printing) => {
-                console.log(printing.set);
+            for(const printing of card.sets) {
                 if(printing.set === setName) {
                     return printing
                 }
-            });
+            };
         }
         // if it doesnt then we return null
     } else {
         return null
     }
 }
-
-fetchCardFromDB("opt", 'sld');
 
 /*
 

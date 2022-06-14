@@ -11,7 +11,7 @@ import { Types } from "mongoose"
  export const saveCardsToDB = async (cards: unknown[], name: string) => {
      //set to any because setting to ObjectId[] doesnt work;
     let cardArr: any[] = [];
-    if(cards.length === 0 || !cards) {
+    if(!cards) {
         await saveNonValidCard(name);
         return;
     }

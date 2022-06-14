@@ -62,7 +62,6 @@ export const CardInfo: Command =  {
                 }
 
                 let card: any = await checkDB();
-                console.log(card)
 
                 if(!card) {
                      let cards = await fetchCardAPI(convertedText);
@@ -70,6 +69,7 @@ export const CardInfo: Command =  {
                      await saveCardsToDB(cards, text);
                      if(cards) {
                         card = await fetchCardFromDB(convertedText, setName)
+                        console.log(card)
                         card = card.details;
                      }
                 } else {
@@ -92,7 +92,6 @@ export const CardInfo: Command =  {
                 }, 100)
             //remove else 
             } else {
-                console.log(card)
                 //This is for price displaying null if card is printed in foil only
                 let price: number = 0;
                 if(card.prices.usd === null) {
