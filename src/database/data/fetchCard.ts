@@ -11,7 +11,7 @@ export const fetchCardAPI = async (name: string) => {
 
     const firstCardMatch:string = cardMatches.data[0];
 
-    const cards = await fetch(`https://api.scryfall.com/cards/search?as=grid&order=released&q=%21"${firstCardMatch}"+include%3Aextras&unique=prints`)
+    const cards = await fetch(`https://api.scryfall.com/cards/search?q=+not%3Adigital+${firstCardMatch}&unique=prints&as=grid&order=released`)
         .then(res => res.json());
     return(cards.data)
 
