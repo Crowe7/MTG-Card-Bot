@@ -1,8 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageEmbed } from 'discord.js';
-import { response } from 'express';
-import fetch from 'node-fetch';
-import { URLSearchParams } from 'node:url';
 import { Command } from '../AllCommands';
 import { stripAndForceLowerCase } from '../data/convertText';
 import { CheckMissingDB } from '../database/data/checkMissingDB';
@@ -65,9 +62,10 @@ export const CardInfo: Command =  {
 
                 if(!card) {
                      let cards = await fetchCardAPI(convertedText);
-                     await saveCardsToDB(cards, text);
+                     await saveCardsToDB(cards, convertedText);
                      if(cards) {
                         card = await fetchCardFromDB(convertedText, setName)
+                        console.log(card);
                         card = card.details;
                      }
                 } else {
