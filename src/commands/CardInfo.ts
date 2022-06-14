@@ -1,9 +1,11 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageEmbed } from 'discord.js';
-import { response } from 'express';
-import fetch from 'node-fetch';
-import { URLSearchParams } from 'node:url';
 import { Command } from '../AllCommands';
+import { stripAndForceLowerCase } from '../data/convertText';
+import { CheckMissingDB } from '../database/data/checkMissingDB';
+import { fetchCardAPI } from '../database/data/fetchCard';
+import { fetchCardFromDB } from '../database/data/fetchCardFromDB';
+import { saveCardsToDB } from '../database/data/saveCardsToDB';
 
 const CardFetch = new SlashCommandBuilder()
     .setName("cardfetch")
@@ -28,40 +30,57 @@ export const CardInfo: Command =  {
         await interaction.deferReply();
         let text: string = interaction.options.getString("cardname", true);
         // Removes spaces
-        let textDespaced: string = text.replace(/\s+/g, '');
+        let convertedText: string = stripAndForceLowerCase(text);
 
         let setName: string | null = interaction.options.getString("set", false);
-
-        if(!setName) {
-            setName = '';
-        }
 
         // call function that checks databases, if empty call new one to pull from api. use below to make the api calling one
         //  
 
-
-        const cards = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${textDespaced}`)
-            .then(response => response.json());
-        const firstCardMatch:string = cards.data[0];
-
-
-        const query = new URLSearchParams(firstCardMatch);
-
+        
         const returnCardInfo = async () => {
                 // let card = await fetchCardFromDB(query, setName) if(setName) const card =  cardsDB.filter.cardinstance...  return card.filter(set: setName) ... else return card[0]
-            const card = await fetch(`https://api.scryfall.com/cards/named?fuzzy=${query}&set=${setName}`)
-                .then(response => response.json());
-            console.log(card);
+            //Wrapper function that runs fetch from db... then fetches from api if card isnt present
+
+            // return a string with the name if the card is only in missing DB.. better ways to do this
+                const checkDB = async () => {
+                    let card: any = await fetchCardFromDB(convertedText, setName);
+                    // checks if the card is in DB
+                    if(!card) {
+                        let noCard = await CheckMissingDB(convertedText);
+                        if(noCard) {
+                            return noCard
+                        }
+                    } else {
+                        card = card.details;
+                    }
+                    // returns a card if present... will be null if nothing there
+                    return card
+                }
+
+                let card: any = await checkDB();
+
+                if(!card) {
+                     let cards = await fetchCardAPI(convertedText);
+                     await saveCardsToDB(cards, convertedText);
+                     if(cards) {
+                        card = await fetchCardFromDB(convertedText, setName)
+                        console.log(card);
+                        card = card.details;
+                     }
+                } else {
+                    if(typeof card === 'string') {
+                        card = null
+                    } 
+                }
+
+
+            
+
                 // if(!card)
-            if(card.status === 404 || card.status === 400) {
+            if(!card) {
                 // card = await fetchCard(query, setName) throw most of this junk in here
                     // if (!card) the run the interaction followup 
-
-                if(setName !== '') {
-                    setName = '';
-                    returnCardInfo();
-                    return
-                }
                 interaction.deleteReply()
                 // had to wrap in a set timeout to get the message to not delete itself from above
                 setTimeout(() => {

@@ -5,6 +5,7 @@ import express from 'express'
 import interactionCreate from "./listeners/interactionCreate"
 import ready from "./listeners/ready"
 import { Commands } from './AllCommands'
+import { connectToDB } from './database/connectDB'
 const TOKEN = process.env.TOKEN
 
 console.log("Bot Starting...");
@@ -15,6 +16,7 @@ const client = new Client({
 
 
 ready(client);
+connectToDB();
 interactionCreate(client);
 
 client.login(TOKEN);
@@ -22,32 +24,16 @@ client.login(TOKEN);
 // TODO CACHE
 
 /*
-            // CRON JOB TODO
-                    const CronJob = require('../lib/cron.js').CronJob;
-
-                    console.log('Before job instantiation');
-                    const job = new CronJob('0 0 0 * * 6', () => {
-                        await cardModel.collection.drop();
-                        await cardNonExistantModel.collection.drop();
-                    });
-                    console.log('Cache Cleared!');
-                    job.start();
-                HAVE A CRON DROP DROP DATABASE ENTIRELY EVERY WEEK TO CLEAR CACHE.. 
 
     WRITE A METHOD TO CACHE THE DATA FRMO SCRYFALL... THEY HAVE AN API CALL FOR IT
 
     MAKE A MONGODB DATABASE TO SYNC INTO IT
     
-    CREATE A FUCNTION THAT STRIPS ALL SPACES AND FORCES LOWERCASE
-        const stripAndForce = (text) => {
-            let finalText = text.split("").filter(char => char !== char.toUpperCase()).join("");
-        }
 
     THEN QUERY THE DATABASE FOR EITHER 
         maybe run all at the same time and then check if any of the values contain anything. function returns either blank or the json for the card data
             word is what is passed into the command as a name
         
-        const match = new RegExp(`^${word}.*$`);
             cardModel.findOne({ "name": { $regex: regexVariable} }, 
                 (err, card) => {
                     if (err) return handleErr(err);
@@ -74,7 +60,15 @@ client.login(TOKEN);
         1. WE CALL THE API FOR AUTO COMPLETE THEN CHECK IF DATABSE CONTAINS CARD THAT IS IN THE FIRST SLOT
         2. WRITE SOME REGEX TO SEARCH FOR ANY SINGLE CARD IN THE CARD COLLECTION IN THE DB THAT CONTAINS THOSE CHARACTERS 
             THEN RETURN AN ARRAY ALL THAT MATCH
-                IF NON EXISTANT FETCH FROM API USING THIS https://scryfall.com/docs/api/cards/collection
+                IF NON EXISTANT FETCH FROM API USING THIS https://api.scryfall.com/cards/search?as=grid&order=released&q=%21"CARDNAMEVARIABLE"+include%3Aextras&unique=prints
+
+                    first fetch using the api that returns array of card names (`https://api.scryfall.com/cards/autocomplete?q=${textDespaced}`
+                    then fill in the first result in above api to pull every printing. then save to the card collections array as
+                    name: "CARDNAME"
+                    sets: "LIST OF ALL PRINTED SETS THE CARD HAS BEEN IN"
+
+
+
                     that allows us to save every single set tied to the card at once
                     and if still not existant then add it to a non existant cards collection
                 IF ONLY ONE RETURN IT
@@ -89,7 +83,6 @@ client.login(TOKEN);
 
     BUILD OUT NODE BACKEND FOR FETCHING STORED DATA IN DATABASE
 
-    LOOK INTO AND USE CRONJOBS TO RUN THE CACHE METHOD EVERY WEEK HOURS TO GET ACCURATE PRICES
 */
 
 // TODO LONG TERM GOALS

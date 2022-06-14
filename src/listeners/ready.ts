@@ -3,8 +3,10 @@ import {Commands} from '../AllCommands';
 import { REST } from '@discordjs/rest';
 import 'dotenv/config'
 import { Routes } from "discord-api-types/v10";
+import mongoose from "mongoose";
 
 export default (client: Client): void => {
+    mongoose.connect(process.env.MONGO_URI as string);    
     // Porbably add a mongoose connnect function database folder then import here and call it.
     client.on("ready", async () => {
         if(!client.user || !client.application) {return}
