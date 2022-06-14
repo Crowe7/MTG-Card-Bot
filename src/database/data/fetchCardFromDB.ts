@@ -37,6 +37,7 @@ import { NoCard } from '../models/NoScryfallListing';
                     return printing
                 }
             };
+            return card.sets[0];
         }
         // if it doesnt then we return null
     } else {

@@ -65,11 +65,9 @@ export const CardInfo: Command =  {
 
                 if(!card) {
                      let cards = await fetchCardAPI(convertedText);
-                     // console.log(cards);
                      await saveCardsToDB(cards, text);
                      if(cards) {
                         card = await fetchCardFromDB(convertedText, setName)
-                        console.log(card)
                         card = card.details;
                      }
                 } else {
