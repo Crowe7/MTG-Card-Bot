@@ -6,20 +6,13 @@ import fetch from 'node-fetch';
 // so we save the card into the db as a card. then take the id of that same card and push that to an array
 // using that array to populate the CardCollection
 export const fetchCardAPI = async (name: string) => {
-   // console.log(name);
     const cardMatches = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${name}`)
         .then(response => response.json());
-   // console.log(cardMatches);
 
     const firstCardMatch:string = cardMatches.data[0];
 
-    const query = new URLSearchParams(firstCardMatch);
-
-    const cards = await fetch(`https://api.scryfall.com/cards/search?as=grid&order=released&q=%21"${query}"+include%3Aextras&unique=prints`)
+    const cards = await fetch(`https://api.scryfall.com/cards/search?as=grid&order=released&q=%21"${firstCardMatch}"+include%3Aextras&unique=prints`)
         .then(res => res.json());
-
-    return(cards.data);
+    return(cards.data)
 
 }
-
-// fetchCardAPI('Opt');
