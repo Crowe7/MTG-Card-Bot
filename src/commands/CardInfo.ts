@@ -47,25 +47,30 @@ export const CardInfo: Command =  {
 
             // return a string with the name if the card is only in missing DB.. better ways to do this
                 const checkDB = async () => {
-                    let card = await fetchCardFromDB(convertedText, setName);
+                    let card: any = await fetchCardFromDB(convertedText, setName);
                     // checks if the card is in DB
                     if(!card) {
                         let noCard = await CheckMissingDB(convertedText);
                         if(noCard) {
                             return noCard
                         }
+                    } else {
+                        card = card.details;
                     }
                     // returns a card if present... will be null if nothing there
                     return card
                 }
 
                 let card: any = await checkDB();
+                console.log(card)
+
                 if(!card) {
                      let cards = await fetchCardAPI(convertedText);
                      // console.log(cards);
                      await saveCardsToDB(cards, text);
                      if(cards) {
                         card = await fetchCardFromDB(convertedText, setName)
+                        card = card.details;
                      }
                 } else {
                     if(typeof card === 'string') {
@@ -76,7 +81,6 @@ export const CardInfo: Command =  {
 
             
 
-            console.log(card);
                 // if(!card)
             if(!card) {
                 // card = await fetchCard(query, setName) throw most of this junk in here
@@ -88,6 +92,7 @@ export const CardInfo: Command =  {
                 }, 100)
             //remove else 
             } else {
+                console.log(card)
                 //This is for price displaying null if card is printed in foil only
                 let price: number = 0;
                 if(card.prices.usd === null) {
