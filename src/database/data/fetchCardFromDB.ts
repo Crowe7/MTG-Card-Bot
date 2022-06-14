@@ -21,18 +21,20 @@ import { NoCard } from '../models/NoScryfallListing';
         console.log(await Card.findOne({ name: 'awdawd' }).exec())
     })
     */
- export const fetchCardFromDB = async (name:string, setName:string) => {
+ export const fetchCardFromDB = async (name:string, setName:string | null) => {
     const card = await CardCollection.findOne({ name: {$regex: matchName(name)} }).populate({path: 'sets', model: Card}).exec()
     //check if this finds a card in the card collection
     if(card) {
+        if(!setName) {
+            // returns the first card if no set matches.
+            return card.sets[0];
+        }
         if (isCard(card.sets[0])) {
             card.sets.forEach((printing) => {
                 if(printing.set === setName) {
                     return printing
                 }
             });
-            // returns the first card if no set matches.
-            return card.sets[0];
         }
         // if it doesnt then we return null
     } else {

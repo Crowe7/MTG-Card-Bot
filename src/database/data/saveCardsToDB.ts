@@ -6,8 +6,8 @@ import { saveNonValidCard } from "../models/NoScryfallListing";
 
  export const saveCardsToDB = async (cards: unknown[], name: string) => {
     const cardArr: ObjectId[] = [];
-
-    if(!cards) {
+    console.log(cards)
+    if(cards.length === 0 || !cards) {
         await saveNonValidCard(name);
         return;
     }
