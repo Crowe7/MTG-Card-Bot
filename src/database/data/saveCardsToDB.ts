@@ -1,12 +1,14 @@
-import { ObjectId } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import { Card, isCard, saveCard } from "../models/Card";
 import { saveCardCollection } from "../models/CardCollection";
 import { saveNonValidCard } from "../models/NoScryfallListing";
 
+import 'dotenv/config'
+mongoose.connect(process.env.MONGO_URI as string);
+
 
  export const saveCardsToDB = async (cards: unknown[], name: string) => {
     const cardArr: ObjectId[] = [];
-    console.log(cards)
     if(cards.length === 0 || !cards) {
         await saveNonValidCard(name);
         return;
@@ -24,6 +26,8 @@ import { saveNonValidCard } from "../models/NoScryfallListing";
         }
     }    
 }
+
+saveCardsToDB([], "Crunt");
 
 /*
 
