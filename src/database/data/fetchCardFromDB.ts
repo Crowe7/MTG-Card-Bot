@@ -21,8 +21,14 @@ import { NoCard } from '../models/NoScryfallListing';
         console.log(await Card.findOne({ name: 'awdawd' }).exec())
     })
     */
+
+
+    import 'dotenv/config'
+    mongoose.connect(process.env.MONGO_URI as string);
+
+
  export const fetchCardFromDB = async (name:string, setName:string | null) => {
-    const card = await CardCollection.findOne({ name: {$regex: matchName(name)} }).populate({path: 'sets', model: Card}).exec()
+    const card = await CardCollection.findOne({ name: {$regex: matchName(name), $options: 'i'} }).populate({path: 'sets', model: Card}).exec()
     //check if this finds a card in the card collection
     if(card) {
         if(!setName) {
@@ -42,6 +48,7 @@ import { NoCard } from '../models/NoScryfallListing';
     }
 }
 
+fetchCardFromDB('opt', null);
 /*
 
           const cardArr = []

@@ -6,10 +6,6 @@ import { saveNonValidCard } from "../models/NoScryfallListing";
 import { Types } from "mongoose"
 
 
-import 'dotenv/config'
-mongoose.connect(process.env.MONGO_URI as string);
-
-
  export const saveCardsToDB = async (cards: unknown[], name: string) => {
      //set to any because setting to ObjectId[] doesnt work;
     let cardArr: any[] = [];
@@ -29,7 +25,6 @@ mongoose.connect(process.env.MONGO_URI as string);
         };
     }
     if(isCard(cards[0]) && cardArr.length !== 0) {
-        console.log(cardArr)
         await saveCardCollection(cards[0].name, cardArr);
     }    
 }
