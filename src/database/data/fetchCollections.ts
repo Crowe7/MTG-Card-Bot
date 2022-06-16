@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import 'dotenv/config'
-import { CollectionInfo } from "mongodb";
 
 const mongoDB = process.env.MONGO_URI as string;
 

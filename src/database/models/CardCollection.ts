@@ -1,5 +1,5 @@
 import { model, ObjectId, Schema } from "mongoose"
-import { Card, CardInterface } from "./Card";
+import { CardInterface } from "./Card";
 
 
 // might need to change sets from being an object array into a string as we have to poulate the card into the spot

@@ -1,4 +1,4 @@
-import { BaseCommandInteraction, Client, Interaction } from "discord.js";
+import { Client, Interaction } from "discord.js";
 import { Commands } from "../AllCommands";
 
 

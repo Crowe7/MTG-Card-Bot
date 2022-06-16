@@ -1,10 +1,6 @@
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 import 'dotenv/config'
 import { showCollections } from "../database/data/fetchCollections";
-import { CollectionInfo } from "mongodb";
-import { saveNonValidCard } from "../database/models/NoScryfallListing";
-import { saveCard, Card, isCard, } from "../database/models/Card";
-import { CardCollection, saveCardCollection } from "../database/models/CardCollection";
 
 function isArray(val: unknown): val is unknown[] {
   return (

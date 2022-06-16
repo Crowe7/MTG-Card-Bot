@@ -1,8 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { MessageEmbed } from 'discord.js';
-import { response } from 'express';
 import fetch from 'node-fetch';
-import { URLSearchParams } from 'node:url';
 import { Command } from '../AllCommands';
 
 const RandomCardFetch = new SlashCommandBuilder()
