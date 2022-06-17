@@ -40,7 +40,6 @@ export const CardInfo: Command =  {
 
         
         const returnCardInfo = async () => {
-                // let card = await fetchCardFromDB(query, setName) if(setName) const card =  cardsDB.filter.cardinstance...  return card.filter(set: setName) ... else return card[0]
             //Wrapper function that runs fetch from db... then fetches from api if card isnt present
 
             // return a string with the name if the card is only in missing DB.. better ways to do this
