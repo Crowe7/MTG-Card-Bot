@@ -5,6 +5,7 @@ import { stripAndForceLowerCase } from '../data/convertText';
 import { CheckMissingDB } from '../database/data/checkMissingDB';
 import { fetchCardAPI } from '../database/data/fetchCard';
 import { fetchCardFromDB } from '../database/data/fetchCardFromDB';
+import { saveAllMatchingCards } from '../database/data/saveAllMatchingCards';
 import { saveCardsToDB } from '../database/data/saveCardsToDB';
 
 const CardFetch = new SlashCommandBuilder()
@@ -63,6 +64,7 @@ export const CardInfo: Command =  {
                 if(!card) {
                      let cards = await fetchCardAPI(convertedText);
                      await saveCardsToDB(cards, convertedText);
+                     await saveAllMatchingCards(convertedText);
                      if(cards) {
                         card = await fetchCardFromDB(convertedText, setName)
                         card = card.details;
