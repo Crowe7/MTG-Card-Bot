@@ -59,7 +59,6 @@ export const CardInfo: Command =  {
                 if(!card) {
                      let cards = await fetchCardAPI(convertedText);
                      await saveCardsToDB(cards, convertedText);
-                     await saveAllMatchingCards(convertedText);
                      if(cards) {
                         card = await fetchCardFromDB(convertedText, setName)
                         card = card.details;
@@ -128,6 +127,8 @@ export const CardInfo: Command =  {
                         .setFooter({ text: `Price: $${price}`})
                     await interaction.editReply({embeds: [embed]});
                 }
+                // saves all the cards after displaying current searched card to the user
+                await saveAllMatchingCards(convertedText);
             }
         }
         returnCardInfo();
