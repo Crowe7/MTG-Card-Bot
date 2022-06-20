@@ -35,12 +35,8 @@ export const CardInfo: Command =  {
 
         let setName: string | null = interaction.options.getString("set", false);
 
-        // call function that checks databases, if empty call new one to pull from api. use below to make the api calling one
-        //  
 
-        
         const returnCardInfo = async () => {
-            //Wrapper function that runs fetch from db... then fetches from api if card isnt present
 
             // return a string with the name if the card is only in missing DB.. better ways to do this
                 const checkDB = async () => {
@@ -63,7 +59,7 @@ export const CardInfo: Command =  {
                 if(!card) {
                      let cards = await fetchCardAPI(convertedText);
                      await saveCardsToDB(cards, convertedText);
-                     await saveAllMatchingCards(convertedText);
+                    // await saveAllMatchingCards(convertedText);
                      if(cards) {
                         card = await fetchCardFromDB(convertedText, setName)
                         card = card.details;
@@ -74,19 +70,12 @@ export const CardInfo: Command =  {
                     } 
                 }
 
-
-            
-
-                // if(!card)
             if(!card) {
-                // card = await fetchCard(query, setName) throw most of this junk in here
-                    // if (!card) the run the interaction followup 
                 interaction.deleteReply()
                 // had to wrap in a set timeout to get the message to not delete itself from above
                 setTimeout(() => {
-                    interaction.followUp({ content: `**No card found matching ${text}**`, ephemeral: true});
-                }, 100)
-            //remove else 
+                     return interaction.followUp({ content: `**No card found matching ${text}**`, ephemeral: true});
+                }, 100);
             } else {
                 //This is for price displaying null if card is printed in foil only
                 let price: number = 0;

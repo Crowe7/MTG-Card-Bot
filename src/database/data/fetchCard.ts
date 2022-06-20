@@ -4,6 +4,10 @@ export const fetchCardAPI = async (name: string) => {
     const cardMatches = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${name}`)
         .then(response => response.json());
 
+    if(!cardMatches.data[0]) {
+        return null
+    }
+
     const firstCardMatch:string = stripAndForceLowerCase(cardMatches.data[0]);
 
 

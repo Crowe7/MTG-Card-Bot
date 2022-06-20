@@ -10,6 +10,9 @@ const reducer = (characters: string[]): string[] => {
     return reduced;
 }
 export const stripAndForceLowerCase = (word: string) => {
+    if(!word) {
+        return ''
+    }
     const splitText: string[] = word.split("");
     const finalText = reducer(splitText).join('');
 
