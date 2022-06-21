@@ -39,9 +39,9 @@ export const RandomCard: Command = {
                     .setURL(card.scryfall_uri)
                     .setDescription(card.card_faces[i].oracle_text)
                     .setFields (
-                        { name: 'CMC', value: `**${card.cmc}**`, inline: true},
                         { name: 'Type', value: `**${card.type_line}**`, inline: true},
                         { name: 'Rarity', value: `**${card.rarity}**`, inline: true},
+                        { name: "Set", value: `**${card.set}**`, inline: true},
                     )
                     .setImage(cardImage)
                     .setFooter({ text: `Price: $${price}`})
@@ -58,9 +58,9 @@ export const RandomCard: Command = {
                 .setURL(card.scryfall_uri)
                 .setDescription(card.oracle_text)
                 .setFields (
-                    { name: 'CMC', value: `**${card.cmc}**`, inline: true},
                     { name: 'Type', value: `**${card.type_line}**`, inline: true},
                     { name: 'Rarity', value: `**${card.rarity}**`, inline: true},
+                    { name: "Set", value: `**${card.set}**`, inline: true}
                 )
                 .setImage(card.image_uris.border_crop)
                 .setFooter({ text: `Price: $${price}`})
