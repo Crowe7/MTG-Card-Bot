@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import { Command } from '../AllCommands';
 import { stripAndForceLowerCase } from '../data/convertText';
 import { CheckMissingDB } from '../database/data/checkMissingDB';
@@ -22,6 +22,18 @@ const CardFetch = new SlashCommandBuilder()
             .setName("set")
             .setDescription("Set printing you would like to display card from.")
             .setRequired(false)
+    )
+
+const buttons = new MessageActionRow()
+    .addComponents(
+        new MessageButton()
+            .setCustomId('add')
+            .setLabel('Add to Collection')
+            .setStyle('PRIMARY'),
+        new MessageButton()
+            .setCustomId('remove')
+            .setLabel('Remove Copy From Collection')
+            .setStyle('DANGER')
     )
 
 
@@ -107,7 +119,7 @@ export const CardInfo: Command =  {
                             .setImage(cardImage)
                             .setFooter({ text: `Price: $${price}`})
                         if(i === 0) {
-                            await interaction.editReply({embeds: [embed]});
+                            await interaction.editReply({embeds: [embed], components: [buttons]});
                         } else {
                             await interaction.followUp({embeds: [embed]});
                         }
@@ -125,7 +137,7 @@ export const CardInfo: Command =  {
                         )
                         .setImage(card.image_uris.border_crop)
                         .setFooter({ text: `Price: $${price}`})
-                    await interaction.editReply({embeds: [embed]});
+                    await interaction.editReply({embeds: [embed], components: [buttons]});
                 }
                 // saves all the cards after displaying current searched card to the user
                 await saveAllMatchingCards(convertedText);
