@@ -8,6 +8,7 @@ import { fetchCardFromDB } from '../database/data/fetchCardFromDB';
 import { saveAllMatchingCards } from '../database/data/saveAllMatchingCards';
 import { saveCardsToDB } from '../database/data/saveCardsToDB';
 
+
 const CardFetch = new SlashCommandBuilder()
     .setName("cardfetch")
     .setDescription("Fetches card info from Scryfall.")
@@ -34,6 +35,7 @@ const buttons = new MessageActionRow()
             .setCustomId('remove')
             .setLabel('Remove Copy From Collection')
             .setStyle('DANGER')
+            // put a setDisabled here that is true if the user has no copys of the card in there collection if possible
     )
 
 
