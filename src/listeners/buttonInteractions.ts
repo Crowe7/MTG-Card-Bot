@@ -1,4 +1,5 @@
 import { ButtonInteraction, CacheType, CollectorFilter, CommandInteraction, Message, MessageComponentInteraction } from "discord.js"
+import { stripFieldText } from "../data/stripAsterisks";
 
 
 
@@ -7,7 +8,7 @@ const addButton = {
     name: 'add',
     run: async (interaction: ButtonInteraction<CacheType>) => {
         console.log(interaction.message.embeds[0].title);
-        console.log(interaction.message.embeds[0].fields?.find(field => field.name === "Set")?.value);
+        console.log(stripFieldText(interaction.message.embeds[0].fields?.find(field => field.name === "Set")?.value));
         interaction.reply({content:"Added cardname to collection: You have _ copies", ephemeral: true})
 
             // import function from database folder that adds the card to the users personal collection
