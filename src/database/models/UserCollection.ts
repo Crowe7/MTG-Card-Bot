@@ -1,8 +1,8 @@
 import { model, Schema, SchemaTypes } from "mongoose"
 
 interface UserInterface {
-    name: string,
-    discordID: number,
+    userName: string,
+    discordID: string,
     cardCollection: UserCardInterface[]
 }
 
@@ -13,12 +13,12 @@ interface UserCardInterface {
 }
 
 const UserSchema = new Schema<UserInterface>({
-    name: { type: String, required: true},
-    discordID: { type: Number, required: true},
+    userName: { type: String, required: true},
+    discordID: { type: String, required: true},
     cardCollection: [
         {
             name: { type: String, required: true},
-            quantity: { type: String, required: true},
+            quantity: { type: Number, required: true},
             setName: { type: String, required: true}
         }
     ]
@@ -26,9 +26,8 @@ const UserSchema = new Schema<UserInterface>({
 
 const User = model<UserInterface>('User', UserSchema)
 
-const saveUser = async (name: string, discordID: number, collection: [UserCardInterface]) => {
-    const userToSave = new User({name: name, discordID: discordID, collection: collection});
-
+const saveUser = async (name: string, discordID: string, collection: UserCardInterface[]) => {
+    const userToSave = new User({userName: name, discordID: discordID, cardCollection: collection});
     await userToSave.save();
 }
 

@@ -22,11 +22,6 @@ client.login(TOKEN);
 
 /*
 
-    WRITE SCHEMA AND MODEL FOR THE USER THEMSELVES
-        id for the specific user, and cards array
-
-    WRITE SCHEMA AND MODEL FOR USERS CARDS
-        name, details for card and quntity
 
     THESE GO INSIDE OF THE ACTUAL CARD INFO COMMAND AS BUTTONS THE USER CAN SEE
         darken the remove button if the user does not have the card currently in there collection.
@@ -40,7 +35,7 @@ client.login(TOKEN);
 
     WRITE COMMAND TO SHOW USER FULL COLLECTION
         have a button that allows a user to export the cards as txt for importing purposes on the eventually made website
-        
+
 
 */
 
