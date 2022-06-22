@@ -28,12 +28,11 @@ const addButton = {
             }
             await saveCardToCollectionDb(name, interaction.user.username, set, interaction.user.id)
             const currentUser = await User.findOne({discordID: interaction.user.id}).exec();
-            const savedCard = currentUser?.cardCollection.filter( card => card.name === name);
+            const savedCard = currentUser?.cardCollection.filter( card => card.name === name && card.setName === set);
             let cardQuantity = null
             if(savedCard) {
                 cardQuantity = savedCard[0].quantity;
             }
-            
             // shows copy instead of copies on one card 
             if(cardQuantity && cardQuantity === 1) {
                 interaction.reply({content:`Added **${name}** from set **${set}** to collection: You have **${cardQuantity}** copy`, ephemeral: true});
