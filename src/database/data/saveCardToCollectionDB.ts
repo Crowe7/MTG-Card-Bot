@@ -25,7 +25,7 @@ const saveCardToCollectionDb = async (name: string, set: string, discordID: numb
     currentUser.cardCollection = [...currentUser.cardCollection, {name: name, quantity: 1, setName: set}];
 
     try {
-        currentUser.save();
+        await currentUser.save();
     } catch (error) {
         console.log(error);
     }
