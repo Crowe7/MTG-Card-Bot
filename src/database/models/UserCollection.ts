@@ -3,7 +3,7 @@ import { model, Schema, SchemaTypes } from "mongoose"
 interface UserInterface {
     name: string,
     discordID: number,
-    collection: [UserCardInterface]
+    cardCollection: UserCardInterface[]
 }
 
 interface UserCardInterface {
@@ -15,7 +15,7 @@ interface UserCardInterface {
 const UserSchema = new Schema<UserInterface>({
     name: { type: String, required: true},
     discordID: { type: Number, required: true},
-    collection: [
+    cardCollection: [
         {
             name: { type: String, required: true},
             quantity: { type: String, required: true},
@@ -26,19 +26,10 @@ const UserSchema = new Schema<UserInterface>({
 
 const User = model<UserInterface>('User', UserSchema)
 
-export const saveUser = async (name: string, discordID: number, collection: [UserCardInterface]) => {
+const saveUser = async (name: string, discordID: number, collection: [UserCardInterface]) => {
     const userToSave = new User({name: name, discordID: discordID, collection: collection});
 
     await userToSave.save();
 }
 
-
-
-
-/*
-WRITE SCHEMA AND MODEL FOR THE USER THEMSELVES
-id for the specific user, and cards array
-
-WRITE SCHEMA AND MODEL FOR USERS CARDS
-name, details for card and quntity
-*/
+export {UserCardInterface, User, saveUser}
