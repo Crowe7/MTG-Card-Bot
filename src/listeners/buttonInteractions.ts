@@ -33,7 +33,14 @@ const addButton = {
             if(savedCard) {
                 cardQuantity = savedCard[0].quantity;
             }
-            interaction.reply({content:`Added **${name}** from set **${set}** to collection: You have **${cardQuantity}** copies`, ephemeral: true})
+            
+            // shows copy instead of copies on one card 
+            if(cardQuantity && cardQuantity === 1) {
+                interaction.reply({content:`Added **${name}** from set **${set}** to collection: You have **${cardQuantity}** copy`, ephemeral: true});
+            } else {
+                interaction.reply({content:`Added **${name}** from set **${set}** to collection: You have **${cardQuantity}** copies`, ephemeral: true});
+            }
+
         } catch (error) {
             interaction.reply({content:`Could not add **${name}** to collection!`, ephemeral: true})
         }
