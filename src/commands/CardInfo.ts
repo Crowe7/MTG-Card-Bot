@@ -35,7 +35,6 @@ const buttons = new MessageActionRow()
             .setCustomId('remove')
             .setLabel('Remove Copy From Collection')
             .setStyle('DANGER')
-            // put a setDisabled here that is true if the user has no copys of the card in there collection if possible
     )
 
 
