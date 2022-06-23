@@ -43,11 +43,13 @@ export const CardInfo: Command =  {
     data: CardFetch,
     run: async (interaction) => {
         await interaction.deferReply();
-        let text: string = interaction.options.getString("cardname", true);
-        // Removes spaces
-        let convertedText: string = stripAndForceLowerCase(text);
 
-        let setName: string | null = interaction.options.getString("set", false);
+        let rawText: string = interaction.options.getString("cardname", true);
+
+        // Removes spaces
+        let convertedText: string = stripAndForceLowerCase(interaction.options.getString("cardname", true));
+
+        let setName: string | null = stripAndForceLowerCase(interaction.options.getString("set", false) || '');
 
 
         const returnCardInfo = async () => {
@@ -87,7 +89,7 @@ export const CardInfo: Command =  {
                 interaction.deleteReply()
                 // had to wrap in a set timeout to get the message to not delete itself from above
                 setTimeout(() => {
-                     return interaction.followUp({ content: `**No card found matching ${text}**`, ephemeral: true});
+                     return interaction.followUp({ content: `**No card found matching ${rawText}**`, ephemeral: true});
                 }, 100);
             } else {
                 //This is for price displaying null if card is printed in foil only
