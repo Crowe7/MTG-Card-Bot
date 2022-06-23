@@ -1,5 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders"
+import { MessageEmbed } from "discord.js"
 import { Command } from "../AllCommands"
+import { collectionFunction } from "../data/collectionFunctionWrapper"
 
 
 const CollectionCommand = new SlashCommandBuilder()
@@ -16,7 +18,8 @@ const CollectionCommand = new SlashCommandBuilder()
         )
 )
 .addStringOption((option) => 
-    option.setName("Bulk Cards")
+    option
+        .setName("bulkcards")
         .setDescription("Cards to add/remove to/from your collection")
         .setRequired(false)
 )
@@ -24,6 +27,14 @@ const CollectionCommand = new SlashCommandBuilder()
 export const Collection: Command = {
     data: CollectionCommand,
     run: async (interaction) => {
-        
+        await interaction.deferReply();
+
+        const title: string = collectionFunction(interaction.options.getString('type', true))
+
+        const embed = new MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle(title)
+
+        await interaction.editReply({embeds: [embed]});
     }
 }

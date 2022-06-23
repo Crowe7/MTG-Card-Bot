@@ -1,7 +1,9 @@
 
 import { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
+
 import {CardInfo} from './commands/CardInfo'
+import { Collection } from './commands/Collection';
 import { RandomCard } from './commands/RandomcCard';
 export interface Command {
     data:
@@ -10,5 +12,5 @@ export interface Command {
     run: (interaction: CommandInteraction) => Promise<void>;
 }
 // Put all commands here
-export const Commands:Command[] = [CardInfo, RandomCard];
+export const Commands:Command[] = [CardInfo, RandomCard, Collection];
 
