@@ -48,9 +48,7 @@ export const CardInfo: Command =  {
 
         // Removes spaces
         let convertedText: string = stripAndForceLowerCase(interaction.options.getString("cardname", true));
-
         let setName: string | null = stripAndForceLowerCase(interaction.options.getString("set", false) || '');
-
 
         const returnCardInfo = async () => {
 
