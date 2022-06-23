@@ -3,6 +3,10 @@ import { bulkRemoveFromDB } from "../database/data/bulkRemoveCardsFromDB";
 import { viewFullCollection } from "../database/data/viewFullCollection";
 
 export const collectionFunction = (functionName: string, /*data: string */) => {
+    /*
+        after each function call convert the object that they return into a txt file unless they throw an error
+
+    */
     switch (functionName) {
         case 'add':
             return bulkAddToDb();
@@ -11,6 +15,6 @@ export const collectionFunction = (functionName: string, /*data: string */) => {
         case 'view':
             return viewFullCollection();
         default:
-            return 'INVALID COMMAND'
+            return 'INVALID COMMAND NAME'
     }
 }

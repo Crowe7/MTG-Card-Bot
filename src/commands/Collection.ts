@@ -29,6 +29,7 @@ export const Collection: Command = {
     run: async (interaction) => {
         await interaction.deferReply();
 
+        // collection function is gonna return an object with which a title to use and a txt file to attach as an attachement to the response message
         const title: string = collectionFunction(interaction.options.getString('type', true))
 
         const embed = new MessageEmbed()
