@@ -30,11 +30,12 @@ export const Collection: Command = {
         await interaction.deferReply();
 
         // collection function is gonna return an object with which a title to use and a txt file to attach as an attachement to the response message
-        const title: string = collectionFunction(interaction.options.getString('type', true))
+        const title: string =  await collectionFunction(interaction.options.getString('type', true), interaction.user.id);
 
         const embed = new MessageEmbed()
         .setColor('#0099ff')
-        .setTitle(title)
+        .setTitle('Placeholder')
+        .setDescription(title);
 
         await interaction.editReply({embeds: [embed]});
     }
