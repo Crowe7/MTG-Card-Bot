@@ -27,3 +27,5 @@ Shows [Scryfall](https://scryfall.com) info, card effect, price and more!
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Also suggest any feature and I'll look into adding it.
+
+Hello Stinky
