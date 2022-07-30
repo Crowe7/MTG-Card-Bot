@@ -1,4 +1,9 @@
-export const convertToTXT = () => {
+import { writeFileSync } from "fs"
+
+export const convertToTXT = (string: string ) => {
     // takes text and uses fs node stuff to convert into a txt file then return that for an attachment to collection
-    return 'NOT IMPLEMENTED YET'
+    writeFileSync('collection.txt', string, {
+        encoding: 'utf8',
+        flag: 'w',
+    });
 }

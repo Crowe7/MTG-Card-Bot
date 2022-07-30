@@ -30,13 +30,18 @@ export const Collection: Command = {
         await interaction.deferReply();
 
         // collection function is gonna return an object with which a title to use and a txt file to attach as an attachement to the response message
-        const title: string =  await collectionFunction(interaction.options.getString('type', true), interaction.user.id);
 
-        const embed = new MessageEmbed()
-        .setColor('#0099ff')
-        .setTitle('Placeholder')
-        .setDescription(title);
-
-        await interaction.editReply({embeds: [embed]});
+        if(interaction.options.getString('type') === 'view') {
+            try {
+                await collectionFunction(interaction.options.getString('type', true), interaction.user.id);
+                await interaction.editReply({files: ['./collection.txt']}); 
+            } catch(err) {
+                interaction.deleteReply()
+                // had to wrap in a set timeout to get the message to not delete itself from above
+                setTimeout(() => {
+                     return interaction.followUp({ content: `${err}`, ephemeral: true});
+                }, 100);
+            }
+        }
     }
 }
