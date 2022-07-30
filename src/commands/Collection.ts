@@ -40,6 +40,17 @@ export const Collection: Command = {
                 // had to wrap in a set timeout to get the message to not delete itself from above
                 setTimeout(() => {
                      return interaction.followUp({ content: `${err}`, ephemeral: true});
+                }, 100); 
+            }
+        } else {
+            try {
+                await collectionFunction(interaction.options.getString('type', true), interaction.user.id, interaction.options.getString('bulkcards', false));
+                await interaction.editReply({files: ['./collection.txt']}); 
+            } catch(err) {
+                interaction.deleteReply()
+                // had to wrap in a set timeout to get the message to not delete itself from above
+                setTimeout(() => {
+                     return interaction.followUp({ content: `${err}`, ephemeral: true});
                 }, 100);
             }
         }

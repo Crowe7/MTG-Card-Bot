@@ -1,4 +1,8 @@
-export const bulkRemoveFromDB = () => {
+export const bulkRemoveFromDB = (discordId: string, bulkData?: string | null) => {
+
+    if(!bulkData) {
+        throw new Error('No cards provided to remove!');
+    }
     return  'NOT IMPLEMENTED YET'
     // takes bulk data from interaction and then 
     /*

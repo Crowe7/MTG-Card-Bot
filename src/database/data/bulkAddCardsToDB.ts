@@ -1,4 +1,8 @@
-export const bulkAddToDb = () => {
+export const bulkAddToDb = (discordID: string, bulkData?: string | null) => {
+
+    if(!bulkData) {
+        throw new Error('No cards provided to add!');
+    }
     return 'NOT IMPLEMENTED YET'
     // takes bulk data from interaction and then 
     /*
