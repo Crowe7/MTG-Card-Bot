@@ -15,3 +15,17 @@ export const bulkRemoveFromDB = (discordId: string, bulkData?: string | null) =>
                 if it did get completly removed just put that the card was removed
     */
 }
+
+
+/*
+
+    Parse each string with quantity name then set
+    for each one pass it into remove card from database
+
+
+    put a try catch in a for loop
+    and set a variable for removed and one for not removed
+    when remove copy throws update cannotRemove variable with the current card from the loop,
+    
+
+*/
