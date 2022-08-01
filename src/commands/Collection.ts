@@ -15,6 +15,7 @@ const CollectionCommand = new SlashCommandBuilder()
             { name: 'Add', value: 'add' },
             { name: 'Remove', value: 'remove' },
             { name: 'View', value: 'view' },
+            { name: 'Delete Collection', value: 'deleteCollection'},
         )
 )
 .addStringOption((option) => 
@@ -35,6 +36,18 @@ export const Collection: Command = {
             try {
                 await collectionFunction(interaction.options.getString('type', true), interaction.user.id);
                 await interaction.editReply({files: ['./collection.txt']}); 
+            } catch(err) {
+                interaction.deleteReply()
+                // had to wrap in a set timeout to get the message to not delete itself from above
+                setTimeout(() => {
+                     return interaction.followUp({ content: `${err}`, ephemeral: true});
+                }, 100); 
+            }
+        }
+        else if(interaction.options.getString('type') === 'deleteCollection') {
+            try {
+                await collectionFunction(interaction.options.getString('type', true), interaction.user.id);
+                await interaction.editReply({ content: `Collection deleted!` }); 
             } catch(err) {
                 interaction.deleteReply()
                 // had to wrap in a set timeout to get the message to not delete itself from above

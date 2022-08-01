@@ -1,4 +1,3 @@
-import { convertToTXT } from "../../data/convertTextToTXT";
 import { User, UserCardInterface } from "../models/UserCollection";
 
 export const viewFullCollection = async (discordID: string) => {
@@ -14,7 +13,7 @@ export const viewFullCollection = async (discordID: string) => {
     }
     let collectionString = cards.join('');
 
-    convertToTXT(collectionString);
+    return collectionString;
     // Loop thorugh every single card the user has
     // returen an object with each card and its quantity
 
