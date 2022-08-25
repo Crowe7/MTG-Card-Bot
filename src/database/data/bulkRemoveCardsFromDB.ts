@@ -1,8 +1,14 @@
-export const bulkRemoveFromDB = (discordId: string, bulkData?: string | null) => {
+import { viewFullCollection } from "../../data/viewFullCollection";
+
+export const bulkRemoveFromDB = async (discordId: string, bulkData?: string | null) => {
 
     if(!bulkData) {
         throw new Error('No cards provided to remove!');
     }
+
+    let collection = await viewFullCollection(discordId);
+    // console.log(collection.split('\n'));
+
     return  'NOT IMPLEMENTED YET'
     // takes bulk data from interaction and then 
     /*

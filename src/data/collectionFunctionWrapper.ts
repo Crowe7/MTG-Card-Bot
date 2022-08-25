@@ -1,8 +1,8 @@
 import { bulkAddToDb } from "../database/data/bulkAddCardsToDB";
 import { bulkRemoveFromDB } from "../database/data/bulkRemoveCardsFromDB";
 import { deleteFullCollection } from "../database/data/deleteFullcollection";
-import { viewFullCollection } from "../database/data/viewFullCollection";
 import { convertToTXT } from "./convertTextToTXT";
+import { viewFullCollection } from "./viewFullCollection";
 
 export const collectionFunction = async (functionName: string, discordID: string, bulkData?: string | null ) => {
     /*
