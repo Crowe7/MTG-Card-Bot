@@ -1,4 +1,5 @@
 import { Attachment } from "discord.js";
+import { attachmentHandler } from "../../data/attachmentHandler";
 import { viewFullUserCollectionDB } from "./viewFullUserCollectionDB";
 
 export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment) => {
@@ -7,9 +8,7 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
         throw new Error('No cards provided to remove!');
     }
     
-    const bulkTextData = await fetch(bulkData.url)
-        .then( response => response.text())
-    const bulkTextDataArray = bulkTextData.split(/\r\n|\r|\n/)
+    let bulkTextDataArray = await attachmentHandler(bulkData)
     
     for (let card of bulkTextDataArray) {
         console.log(card);
