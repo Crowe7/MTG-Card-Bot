@@ -19,11 +19,24 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
     let bulkTextDataArray = await attachmentHandler(bulkData)
     
     for (let card of bulkTextDataArray) {
+
+        let cardInfo: CardToRemoveInterface = {
+            name: '',
+            quantity: 0,
+            set: ''
+        };
+        
         let splitCard = card.split(' ');
         // if the card provided has a specific set it removes the brackets before adding it to the object
+
+        cardInfo.quantity = parseInt(splitCard[0])
+
         if( splitCard[splitCard.length - 1].charAt(0) === "[" || splitCard[splitCard.length - 1].charAt(0) === "(") {
-            let setcode = stripSetBrackets( splitCard[splitCard.length - 1])
+            let setcode = stripSetBrackets( splitCard[splitCard.length - 1]);
+            cardInfo.set = setcode;
         }
+
+        console.log(cardInfo)
         // for (let i = 0; i < card)
     };
 
