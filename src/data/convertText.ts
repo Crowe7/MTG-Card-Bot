@@ -1,7 +1,7 @@
 const reducer = (characters: string[]): string[] => {
     const reduced = characters.reduce( (filtered: string[], char) => {
     	let lowerchar = char.toLowerCase();
-        if(lowerchar !== char.toUpperCase()) {
+        if(lowerchar !== char.toUpperCase() || typeof parseInt(char) === "number") {
             filtered.push(lowerchar);
         }
         return filtered;

@@ -25,7 +25,7 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
             quantity: 0,
             set: ''
         };
-        
+
         let splitCard = card.split(' ');
         // if the card provided has a specific set it removes the brackets before adding it to the object
 
@@ -36,8 +36,9 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
             cardInfo.set = setcode;
         }
 
-        console.log(cardInfo)
-        // for (let i = 0; i < card)
+        let cardNameArray = splitCard.slice(1, splitCard.length - 1);
+        console.log(cardNameArray.join(''));
+        // console.log(cardInfo)
     };
 
     let collection = await viewFullUserCollectionDB(discordId);
