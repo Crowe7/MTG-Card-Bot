@@ -1,6 +1,6 @@
 import { Attachment } from "discord.js";
 import { attachmentHandler } from "../../data/attachmentHandler";
-import { stripSetBrackets } from "../../data/stripParenAndBracket";
+import { stripAndForceLowerCase } from "../../data/convertText";
 import { viewFullUserCollectionDB } from "./viewFullUserCollectionDB";
 
 interface CardToRemoveInterface {
@@ -32,13 +32,13 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
         cardInfo.quantity = parseInt(splitCard[0])
 
         if( splitCard[splitCard.length - 1].charAt(0) === "[" || splitCard[splitCard.length - 1].charAt(0) === "(") {
-            let setcode = stripSetBrackets( splitCard[splitCard.length - 1]);
+            let setcode = stripAndForceLowerCase( splitCard[splitCard.length - 1]);
             cardInfo.set = setcode;
         }
 
         let cardNameArray = splitCard.slice(1, splitCard.length - 1);
-        console.log(cardNameArray.join(''));
-        // console.log(cardInfo)
+        // console.log(cardNameArray.join(''));
+        console.log(cardInfo)
     };
 
     let collection = await viewFullUserCollectionDB(discordId);
