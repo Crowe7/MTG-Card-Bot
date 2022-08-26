@@ -1,4 +1,6 @@
-export const bulkAddToDb = (discordID: string, bulkData?: string | null) => {
+import { Attachment } from "discord.js";
+
+export const bulkAddToDb = (discordID: string, bulkData?: Attachment) => {
 
     if(!bulkData) {
         throw new Error('No cards provided to add!');

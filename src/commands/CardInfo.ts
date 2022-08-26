@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, EmbedBuilder, } from 'discord.js';
 import { Command } from '../AllCommands';
 import { stripAndForceLowerCase } from '../data/convertText';
 import { CheckMissingDB } from '../database/data/checkMissingDB';
@@ -25,16 +25,16 @@ const CardFetch = new SlashCommandBuilder()
             .setRequired(false)
     )
 
-const buttons = new MessageActionRow()
+const buttons = new ActionRowBuilder<ButtonBuilder>()
     .addComponents(
-        new MessageButton()
+        new ButtonBuilder()
             .setCustomId('add')
             .setLabel('Add to Collection')
-            .setStyle('PRIMARY'),
-        new MessageButton()
+            .setStyle(1),
+        new ButtonBuilder()
             .setCustomId('remove')
             .setLabel('Remove Copy From Collection')
-            .setStyle('DANGER')
+            .setStyle(4)
     )
 
 
@@ -107,7 +107,7 @@ export const CardInfo: Command =  {
                             cardImage = card.image_uris.border_crop;
                         }
 
-                        const embed = new MessageEmbed()
+                        const embed = new EmbedBuilder()
                             .setColor('#0099ff')
                             .setTitle(card.card_faces[i].name)
                             .setURL(card.scryfall_uri)
@@ -126,7 +126,7 @@ export const CardInfo: Command =  {
                         }
                     }
                 } else {
-                    const embed = new MessageEmbed()
+                    const embed = new EmbedBuilder()
                         .setColor('#0099ff')
                         .setTitle(card.name)
                         .setURL(card.scryfall_uri)

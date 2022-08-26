@@ -1,13 +1,16 @@
-import { viewFullCollection } from "../../data/viewFullCollection";
+import { Attachment } from "discord.js";
+import { viewFullUserCollectionDB } from "./viewFullUserCollectionDB";
 
-export const bulkRemoveFromDB = async (discordId: string, bulkData?: string | null) => {
+export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment) => {
 
     if(!bulkData) {
         throw new Error('No cards provided to remove!');
     }
+    
+    console.log(bulkData)
 
-    let collection = await viewFullCollection(discordId);
-    // console.log(collection.split('\n'));
+    let collection = await viewFullUserCollectionDB(discordId);
+    // console.log(collection);
 
     return  'NOT IMPLEMENTED YET'
     // takes bulk data from interaction and then 

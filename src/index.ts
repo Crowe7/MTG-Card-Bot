@@ -1,4 +1,4 @@
-import { Client, Intents} from "discord.js"
+import { Client, GatewayIntentBits} from "discord.js"
 import 'dotenv/config'
 import interactionCreate from "./listeners/interactionCreate"
 import ready from "./listeners/ready"
@@ -7,9 +7,7 @@ const TOKEN = process.env.TOKEN
 
 console.log("Bot Starting...");
 
-const client = new Client({
-    intents: [Intents.FLAGS.GUILDS]
-});
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 
 ready(client);

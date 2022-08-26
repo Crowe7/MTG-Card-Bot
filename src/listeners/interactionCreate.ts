@@ -4,7 +4,7 @@ import { buttonInteractions } from "./buttonInteractions";
 
 
 export default (client: Client): void => {
-    client.on("interactionCreate", async (interaction: Interaction) => {
+    client.on("interactionCreate", async (interaction: any) => {
         if (interaction.isCommand()) {
             for (const Command of Commands) {
                 if(interaction.commandName === Command.data.name) {

@@ -1,5 +1,4 @@
 import { SlashCommandBuilder } from "@discordjs/builders"
-import { MessageEmbed } from "discord.js"
 import { Command } from "../AllCommands"
 import { collectionFunction } from "../data/collectionFunctionWrapper"
 
@@ -9,7 +8,7 @@ const CollectionCommand = new SlashCommandBuilder()
 .setDescription("Allows you to view, add, or remove cards from your personal collection.")
 .addStringOption((option) =>
     option.setName("type")
-        .setDescription("Paste bulk text in for adding/removing.")
+        .setDescription("Paste text file in for adding/removing.")
         .setRequired(true)
         .addChoices(
             { name: 'Add', value: 'add' },
@@ -18,7 +17,7 @@ const CollectionCommand = new SlashCommandBuilder()
             { name: 'Delete Collection', value: 'deleteCollection'},
         )
 )
-.addStringOption((option) => 
+.addAttachmentOption((option) => 
     option
         .setName("bulkcards")
         .setDescription("Cards to add/remove to/from your collection")
@@ -57,7 +56,7 @@ export const Collection: Command = {
             }
         } else {
             try {
-                await collectionFunction(interaction.options.getString('type', true), interaction.user.id, interaction.options.getString('bulkcards', false));
+                await collectionFunction(interaction.options.getString('type', true), interaction.user.id,  interaction.options.getAttachment('bulkcards', true) )
                 await interaction.editReply({files: ['./collection.txt']}); 
             } catch(err) {
                 interaction.deleteReply()

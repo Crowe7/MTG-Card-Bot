@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
+import { EmbedBuilder } from 'discord.js';
 import { Command } from '../AllCommands';
 
 const RandomCardFetch = new SlashCommandBuilder()
@@ -33,7 +32,7 @@ export const RandomCard: Command = {
                     cardImage = card.image_uris.border_crop;
                 }
 
-                const embed = new MessageEmbed()
+                const embed = new EmbedBuilder()
                     .setColor('#0099ff')
                     .setTitle(card.card_faces[i].name)
                     .setURL(card.scryfall_uri)
@@ -52,7 +51,7 @@ export const RandomCard: Command = {
                 }
             }
         } else {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor('#0099ff')
                 .setTitle(card.name)
                 .setURL(card.scryfall_uri)
