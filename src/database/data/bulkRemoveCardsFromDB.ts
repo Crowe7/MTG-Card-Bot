@@ -7,10 +7,15 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
         throw new Error('No cards provided to remove!');
     }
     
-    console.log(bulkData)
+    const bulkTextData = await fetch(bulkData.url)
+        .then( response => response.text())
+    const bulkTextDataArray = bulkTextData.split(/\r\n|\r|\n/)
+    
+    for (let card of bulkTextDataArray) {
+        console.log(card);
+    };
 
     let collection = await viewFullUserCollectionDB(discordId);
-    // console.log(collection);
 
     return  'NOT IMPLEMENTED YET'
     // takes bulk data from interaction and then 
