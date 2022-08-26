@@ -1,8 +1,16 @@
 import { Attachment } from "discord.js";
 import { attachmentHandler } from "../../data/attachmentHandler";
+import { stripSetBrackets } from "../../data/stripParenAndBracket";
 import { viewFullUserCollectionDB } from "./viewFullUserCollectionDB";
 
+interface CardToRemoveInterface {
+    name: string,
+    quantity: number,
+    set: string
+}
+
 export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment) => {
+
 
     if(!bulkData) {
         throw new Error('No cards provided to remove!');
@@ -11,7 +19,12 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
     let bulkTextDataArray = await attachmentHandler(bulkData)
     
     for (let card of bulkTextDataArray) {
-        console.log(card);
+        let splitCard = card.split(' ');
+        // if the card provided has a specific set it removes the brackets before adding it to the object
+        if( splitCard[splitCard.length - 1].charAt(0) === "[" || splitCard[splitCard.length - 1].charAt(0) === "(") {
+            let setcode = stripSetBrackets( splitCard[splitCard.length - 1])
+        }
+        // for (let i = 0; i < card)
     };
 
     let collection = await viewFullUserCollectionDB(discordId);
