@@ -5,7 +5,14 @@ import { deleteFullCollection } from "../database/data/deleteFullcollection";
 import { convertToTXT } from "./convertTextToTXT";
 import { viewFullCollection } from "./viewFullCollection";
 
-export const collectionFunction = async (functionName: string, discordID: string, bulkData?: Attachment ) => {
+enum collectionFunctions {
+    add = 'add',
+    remove = 'remove',
+    view = 'view',
+    deleteCollection = 'deleteCollection'
+}
+
+export const collectionFunction = async (functionName: collectionFunctions | string, discordID: string, bulkData?: Attachment ) => {
     /*
         after each function call convert the object that they return into a txt file unless they throw an error
 
