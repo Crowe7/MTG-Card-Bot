@@ -1,4 +1,2 @@
-CARDS REMOVED SUCCESSFULLY! 
-
-
-CARD FAILED TO BE REMOVED! 
+1 Liliana of the Veil (dmu)
+1 Opt (sta)

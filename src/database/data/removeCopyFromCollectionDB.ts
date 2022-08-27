@@ -14,8 +14,7 @@ export const removeCopyFromCollectionDB = async (discordID: string, cardName: st
     }
 
     for(const card of currentUser.cardCollection) {
-        if(card.name === cardName && card.setName === setName || setName === '') {
-
+        if(card.name === cardName && card.setName === setName || card.name === cardName && setName === '') {
             card.quantity -= quantity;
             if (card.quantity <= 0) {
                 currentUser.cardCollection = currentUser.cardCollection.filter( card => card.name !== cardName && card.setName !== setName);
