@@ -14,7 +14,6 @@ const saveCardToCollectionDb = async (name: string, userName: string, set: strin
         try {
             return await saveUser(userName, discordID, collection);
         } catch (error) {
-            console.log(error);
             throw new Error('Could Not Save Or Find User');
         }
     }

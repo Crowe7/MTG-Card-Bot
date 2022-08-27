@@ -1,7 +1,4 @@
 CARDS REMOVED SUCCESSFULLY! 
-Rancor
 
 
 CARD FAILED TO BE REMOVED! 
-Teysa, Envoy of Ghosts
-

@@ -11,8 +11,11 @@ interface CardToRemoveInterface {
 export const bulkCardParse = async (cardAttachmentData: Attachment): Promise<CardToRemoveInterface[]> => {
 
     let cardInfoArr:CardToRemoveInterface[] = [];
-    
+
     let bulkTextDataArray = await attachmentHandler(cardAttachmentData)
+    if(!bulkTextDataArray) {
+        return cardInfoArr;
+    }
     
     for (let card of bulkTextDataArray) {
 

@@ -85,7 +85,6 @@ const removeButton = {
             }
 
         } catch (error) {
-            console.log(error);
             interaction.reply({content:`Could not remove **${name}** from collection!`, ephemeral: true})
         }
     }
