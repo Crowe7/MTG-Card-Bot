@@ -13,6 +13,7 @@ import { CardCollection } from '../models/CardCollection';
 
  export const fetchCardFromDB = async (name:string, setName:string | null) => {
     const card = await CardCollection.findOne({ name: {$regex: matchName(name), $options: 'i'} }).populate({path: 'sets', model: Card}).exec()
+    console.log(card, name)
     //check if this finds a card in the card collection
     if(card) {
         if(!setName) {

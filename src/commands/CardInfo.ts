@@ -73,7 +73,10 @@ export const CardInfo: Command =  {
                      let cards = await fetchCardAPI(convertedText);
                      await saveCardsToDB(cards, convertedText);
                      if(cards) {
-                        card = await fetchCardFromDB(convertedText, setName)
+                        // we use the fetched card because if a user searches without using the first name of a card
+                        // the API will fetch the proper card ie: "master of the veil" instead of "oftheveil"
+                        // which would cause the regex to fail to find in the DB
+                        card = await fetchCardFromDB(stripAndForceLowerCase(cards[0].name), setName)
                         card = card.details;
                      }
                 } else {
