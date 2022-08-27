@@ -21,7 +21,6 @@ const Card = model<CardInterface>('Card', CardSchema);
 
 export const saveCard = async (name: string, set: string, details: {[key: string]: any} ) => {
     const cardToSave = new Card({ name: name, set: set, details: details });
-
     await cardToSave.save();
 }
 
