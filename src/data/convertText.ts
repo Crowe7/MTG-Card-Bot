@@ -15,7 +15,6 @@ export const stripAndForceLowerCase = (word: string) => {
     }
     const splitText: string[] = word.split("");
     const finalText = reducer(splitText).join('');
-    console.log(finalText);
 
     return finalText;
 }

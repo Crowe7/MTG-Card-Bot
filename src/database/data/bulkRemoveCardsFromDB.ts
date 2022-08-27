@@ -1,6 +1,7 @@
 import { Attachment } from "discord.js";
 import { attachmentHandler } from "../../data/attachmentHandler";
 import { stripAndForceLowerCase } from "../../data/convertText";
+import { removeCopyFromCollectionDB } from "./removeCopyFromCollectionDB";
 import { viewFullUserCollectionDB } from "./viewFullUserCollectionDB";
 
 interface CardToRemoveInterface {
@@ -37,11 +38,15 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
         }
 
         let cardNameArray = splitCard.slice(1, splitCard.length - 1);
-        // console.log(cardNameArray.join(''));
-        console.log(cardInfo)
+
+        cardInfo.name = cardNameArray.join(' ');
+
+       //  await removeCopyFromCollectionDB(discordId, cardInfo.name, cardInfo.set, cardInfo.quantity);
     };
 
-    let collection = await viewFullUserCollectionDB(discordId);
+    
+
+    // let collection = await viewFullUserCollectionDB(discordId);
 
     return  'NOT IMPLEMENTED YET'
     // takes bulk data from interaction and then 
