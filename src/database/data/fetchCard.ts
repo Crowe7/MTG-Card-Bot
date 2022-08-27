@@ -16,3 +16,10 @@ export const fetchCardAPI = async (name: string) => {
     return(cards.data)
 
 }
+
+export const fetchExactCardAPR = async (name: string, setName: string) => {
+    const card = await fetch(`https://api.scryfall.com/cards/named?exact=${name}&set=${setName}`)
+    .then(response => response.json());
+
+    return card
+}
