@@ -1,2 +1,7 @@
-1 Rancor (2x2)
-1 Teysa, Envoy of Ghosts (c21)
+CARDS REMOVED SUCCESSFULLY! 
+Rancor
+
+
+CARD FAILED TO BE REMOVED! 
+Teysa, Envoy of Ghosts
+

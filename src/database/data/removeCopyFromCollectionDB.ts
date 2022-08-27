@@ -26,5 +26,5 @@ export const removeCopyFromCollectionDB = async (discordID: string, cardName: st
     }
 
     // throws if no card was found
-    throw new Error
+    throw new Error('No Card Found!')
 }
