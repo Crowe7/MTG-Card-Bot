@@ -41,7 +41,7 @@ export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment)
 
         cardInfo.name = cardNameArray.join(' ');
 
-       //  await removeCopyFromCollectionDB(discordId, cardInfo.name, cardInfo.set, cardInfo.quantity);
+        await removeCopyFromCollectionDB(discordId, cardInfo.name, cardInfo.set, cardInfo.quantity);
     };
 
     
