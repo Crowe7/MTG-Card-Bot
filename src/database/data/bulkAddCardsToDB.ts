@@ -40,7 +40,7 @@ export const bulkAddToDb = async (discordID: string, bulkData?: Attachment, user
     }
 
     let succAdded:string[] = ['CARDS ADDED SUCCESSFULLY! \n'];
-    let failAdded:string[] = ['\n\nCARD FAILED TO BE ADDED! \n'];
+    let failAdded:string[] = ['\n\nCARDS FAILED TO BE ADDED! \n'];
 
 
     for (let cardInfo of bulkDataArr) {
