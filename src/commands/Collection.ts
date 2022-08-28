@@ -21,7 +21,7 @@ const CollectionCommand = new SlashCommandBuilder()
 .addAttachmentOption((option) => 
     option
         .setName("bulkcards")
-        .setDescription("Cards to add/remove to/from your collection")
+        .setDescription("Cards to add/remove to/from your collection!, format is: 1 Shock (AER), put each card on a new line in a TXT file!")
         .setRequired(false)
 )
 
