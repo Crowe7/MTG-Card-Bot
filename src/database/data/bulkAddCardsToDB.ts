@@ -9,9 +9,6 @@ import { saveCardToCollectionDb } from "./saveCardToCollectionDB";
 
 export const bulkAddToDb = async (discordID: string, bulkData?: Attachment, userName?: string) => {
 
-    // this is gross :(
-    convertToTXT('NO CARDS ADDED!');
-
     if(!bulkData) {
         throw new Error('No cards provided to add!');
     }

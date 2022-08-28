@@ -21,7 +21,7 @@ const CollectionCommand = new SlashCommandBuilder()
 .addAttachmentOption((option) => 
     option
         .setName("bulkcards")
-        .setDescription("Cards to add/remove to/from your collection!, format is: 1 Shock (AER), put each card on a new line in a TXT file!")
+        .setDescription("add/remove from your collection with a TXT file!, format is: 1 Shock (AER)")
         .setRequired(false)
 )
 
@@ -66,7 +66,7 @@ export const Collection: Command = {
                 // had to wrap in a set timeout to get the message to not delete itself from above
                 setTimeout(() => {
                     return interaction.followUp({ content: `${err}`, ephemeral: true});
-               }, 140); // this is a random number... Bot crashes below 120
+               }, 200); // this is a random number... Bot crashes below 120
             }
         }
     }
