@@ -34,8 +34,8 @@ const saveCardToCollectionDb = async (name: string, userName: string, set: strin
 
     try {
         await currentUser.save();
-    } catch (error) {
-        console.log(error);
+    } catch (error: any) {
+        throw new Error(error);
     }
 }
 

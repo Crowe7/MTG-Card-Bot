@@ -56,7 +56,7 @@ export const Collection: Command = {
             }
         } else {
             try {
-                await collectionFunction(interaction.options.getString('type', true), interaction.user.id,  interaction.options.getAttachment('bulkcards', false) || undefined )
+                await collectionFunction(interaction.options.getString('type', true), interaction.user.id,  interaction.options.getAttachment('bulkcards', false) || undefined, interaction.user.username )
                 await interaction.editReply({files: ['./collection.txt']}); 
             } catch(err) {
                 interaction.deleteReply()

@@ -1,2 +1,6 @@
-1 Liliana of the Veil (dmu)
-1 Opt (sta)
+CARDS REMOVED SUCCESSFULLY! 
+Teysa, Envoy of Ghosts
+
+
+CARD FAILED TO BE REMOVED! 
+
