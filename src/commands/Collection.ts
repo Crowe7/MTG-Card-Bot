@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders"
 import { Command } from "../AllCommands"
 import { collectionFunction } from "../data/collectionFunctionWrapper"
+import { deleteCollectionFile } from "../data/deleteCollectionFile"
 
 
 const CollectionCommand = new SlashCommandBuilder()
@@ -35,6 +36,7 @@ export const Collection: Command = {
             try {
                 await collectionFunction(interaction.options.getString('type', true), interaction.user.id);
                 await interaction.editReply({files: ['./collection.txt']}); 
+                deleteCollectionFile();
             } catch(err) {
                 interaction.deleteReply()
                 // had to wrap in a set timeout to get the message to not delete itself from above
@@ -58,6 +60,7 @@ export const Collection: Command = {
             try {
                 await collectionFunction(interaction.options.getString('type', true), interaction.user.id,  interaction.options.getAttachment('bulkcards', false) || undefined, interaction.user.username )
                 await interaction.editReply({files: ['./collection.txt']}); 
+                deleteCollectionFile();
             } catch(err) {
                 interaction.deleteReply()
                 // had to wrap in a set timeout to get the message to not delete itself from above
