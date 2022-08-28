@@ -1,8 +1,6 @@
-import { Client } from "discord.js";
+import { Client, REST, Routes } from "discord.js";
 import {Commands} from '../AllCommands';
-import { REST } from '@discordjs/rest';
 import 'dotenv/config'
-import { Routes } from "discord-api-types/v10";
 import mongoose from "mongoose";
 
 export default (client: Client): void => {

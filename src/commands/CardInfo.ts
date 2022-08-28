@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, EmbedBuilder, } from 'discord.js';
 import { Command } from '../AllCommands';
 import { stripAndForceLowerCase } from '../data/convertText';
 import { CheckMissingDB } from '../database/data/checkMissingDB';
@@ -7,6 +7,7 @@ import { fetchCardAPI } from '../database/data/fetchCard';
 import { fetchCardFromDB } from '../database/data/fetchCardFromDB';
 import { saveAllMatchingCards } from '../database/data/saveAllMatchingCards';
 import { saveCardsToDB } from '../database/data/saveCardsToDB';
+
 
 const CardFetch = new SlashCommandBuilder()
     .setName("cardfetch")
@@ -24,17 +25,29 @@ const CardFetch = new SlashCommandBuilder()
             .setRequired(false)
     )
 
+const buttons = new ActionRowBuilder<ButtonBuilder>()
+    .addComponents(
+        new ButtonBuilder()
+            .setCustomId('add')
+            .setLabel('Add to Collection')
+            .setStyle(1),
+        new ButtonBuilder()
+            .setCustomId('remove')
+            .setLabel('Remove Copy From Collection')
+            .setStyle(4)
+    )
+
 
 export const CardInfo: Command =  {
     data: CardFetch,
     run: async (interaction) => {
         await interaction.deferReply();
-        let text: string = interaction.options.getString("cardname", true);
+
+        let rawText: string = interaction.options.getString("cardname", true);
+
         // Removes spaces
-        let convertedText: string = stripAndForceLowerCase(text);
-
-        let setName: string | null = interaction.options.getString("set", false);
-
+        let convertedText: string = stripAndForceLowerCase(interaction.options.getString("cardname", true));
+        let setName: string | null = stripAndForceLowerCase(interaction.options.getString("set", false) || '');
 
         const returnCardInfo = async () => {
 
@@ -60,7 +73,10 @@ export const CardInfo: Command =  {
                      let cards = await fetchCardAPI(convertedText);
                      await saveCardsToDB(cards, convertedText);
                      if(cards) {
-                        card = await fetchCardFromDB(convertedText, setName)
+                        // we use the fetched card because if a user searches without using the first name of a card
+                        // the API will fetch the proper card ie: "master of the veil" instead of "oftheveil"
+                        // which would cause the regex to fail to find in the DB
+                        card = await fetchCardFromDB(stripAndForceLowerCase(cards[0].name), setName)
                         card = card.details;
                      }
                 } else {
@@ -73,7 +89,7 @@ export const CardInfo: Command =  {
                 interaction.deleteReply()
                 // had to wrap in a set timeout to get the message to not delete itself from above
                 setTimeout(() => {
-                     return interaction.followUp({ content: `**No card found matching ${text}**`, ephemeral: true});
+                     return interaction.followUp({ content: `**No card found matching ${rawText}**`, ephemeral: true});
                 }, 100);
             } else {
                 //This is for price displaying null if card is printed in foil only
@@ -94,38 +110,38 @@ export const CardInfo: Command =  {
                             cardImage = card.image_uris.border_crop;
                         }
 
-                        const embed = new MessageEmbed()
+                        const embed = new EmbedBuilder()
                             .setColor('#0099ff')
                             .setTitle(card.card_faces[i].name)
                             .setURL(card.scryfall_uri)
                             .setDescription(card.card_faces[i].oracle_text)
                             .setFields (
-                                { name: 'CMC', value: `**${card.cmc}**`, inline: true},
                                 { name: 'Type', value: `**${card.type_line}**`, inline: true},
                                 { name: 'Rarity', value: `**${card.rarity}**`, inline: true},
+                                { name: "Set", value: `**${card.set}**`, inline: true}
                             )
                             .setImage(cardImage)
                             .setFooter({ text: `Price: $${price}`})
                         if(i === 0) {
-                            await interaction.editReply({embeds: [embed]});
+                            await interaction.editReply({embeds: [embed], components: [buttons]});
                         } else {
                             await interaction.followUp({embeds: [embed]});
                         }
                     }
                 } else {
-                    const embed = new MessageEmbed()
+                    const embed = new EmbedBuilder()
                         .setColor('#0099ff')
                         .setTitle(card.name)
                         .setURL(card.scryfall_uri)
                         .setDescription(card.oracle_text)
                         .setFields (
-                            { name: 'CMC', value: `**${card.cmc}**`, inline: true},
                             { name: 'Type', value: `**${card.type_line}**`, inline: true},
                             { name: 'Rarity', value: `**${card.rarity}**`, inline: true},
+                            { name: "Set", value: `**${card.set}**`, inline: true}
                         )
                         .setImage(card.image_uris.border_crop)
                         .setFooter({ text: `Price: $${price}`})
-                    await interaction.editReply({embeds: [embed]});
+                    await interaction.editReply({embeds: [embed], components: [buttons]});
                 }
                 // saves all the cards after displaying current searched card to the user
                 await saveAllMatchingCards(convertedText);

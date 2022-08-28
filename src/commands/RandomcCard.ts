@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
+import { EmbedBuilder } from 'discord.js';
 import { Command } from '../AllCommands';
 
 const RandomCardFetch = new SlashCommandBuilder()
@@ -33,15 +32,15 @@ export const RandomCard: Command = {
                     cardImage = card.image_uris.border_crop;
                 }
 
-                const embed = new MessageEmbed()
+                const embed = new EmbedBuilder()
                     .setColor('#0099ff')
                     .setTitle(card.card_faces[i].name)
                     .setURL(card.scryfall_uri)
                     .setDescription(card.card_faces[i].oracle_text)
                     .setFields (
-                        { name: 'CMC', value: `**${card.cmc}**`, inline: true},
                         { name: 'Type', value: `**${card.type_line}**`, inline: true},
                         { name: 'Rarity', value: `**${card.rarity}**`, inline: true},
+                        { name: "Set", value: `**${card.set}**`, inline: true},
                     )
                     .setImage(cardImage)
                     .setFooter({ text: `Price: $${price}`})
@@ -52,15 +51,15 @@ export const RandomCard: Command = {
                 }
             }
         } else {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor('#0099ff')
                 .setTitle(card.name)
                 .setURL(card.scryfall_uri)
                 .setDescription(card.oracle_text)
                 .setFields (
-                    { name: 'CMC', value: `**${card.cmc}**`, inline: true},
                     { name: 'Type', value: `**${card.type_line}**`, inline: true},
                     { name: 'Rarity', value: `**${card.rarity}**`, inline: true},
+                    { name: "Set", value: `**${card.set}**`, inline: true}
                 )
                 .setImage(card.image_uris.border_crop)
                 .setFooter({ text: `Price: $${price}`})

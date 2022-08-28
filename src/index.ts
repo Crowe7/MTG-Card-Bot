@@ -1,4 +1,4 @@
-import { Client, Intents} from "discord.js"
+import { Client, GatewayIntentBits} from "discord.js"
 import 'dotenv/config'
 import interactionCreate from "./listeners/interactionCreate"
 import ready from "./listeners/ready"
@@ -7,9 +7,7 @@ const TOKEN = process.env.TOKEN
 
 console.log("Bot Starting...");
 
-const client = new Client({
-    intents: [Intents.FLAGS.GUILDS]
-});
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 
 ready(client);
@@ -18,19 +16,28 @@ interactionCreate(client);
 
 client.login(TOKEN);
 
-// TODO SAVE CARDS DATABASE
+// TODO ADD COLLECTION COMMAND
+
+/*
+
+    WRITE COMMAND TO SHOW USER FULL COLLECTION
+        have a button that allows a user to export the cards as txt for importing purposes on the eventually made website
+
+    WRITE COMMAND TO ALLOW USER TO IMPUT BULK COLLECTION DATA
+
+    WRITE COMMAND TO ALLOW USER TO REMOVE BULK COLLECTION DATA
+
+
+*/
 
 // TODO LONG TERM GOALS
 
 /*
 
-    WRITE COMMAND TO ALLOW USER TO ADD NEW CARD TO COLLECTION
 
     WRITE COMMAND TO ALLOW USER TO VIEW FULL COLLECTION
 
     WRITE COMMAND THAT ALLOWS USER TO EXPORT COLLECTION IN A WAY THAT THEY CAN IMPORT ONTO OTHER WEBSITES
-
-    WRITE COMMAND TO ALLOW REMOVING A CARD FROM COLLECTION
 
     ??? ALLOW USER TO SAVE DECKS AND GET CERTAIN STATS FROM DECK EG: AVRAGE CMC, COLORS, TYPES, ETC ???
 
