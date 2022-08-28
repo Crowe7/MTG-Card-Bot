@@ -26,6 +26,7 @@ export const bulkCardParse = async (cardAttachmentData: Attachment): Promise<Car
         };
 
         let splitCard = card.split(' ');
+        let cardNameArray:string[] = []
         // if the card provided has a specific set it removes the brackets before adding it to the object
 
         cardInfo.quantity = parseInt(splitCard[0])
@@ -33,9 +34,12 @@ export const bulkCardParse = async (cardAttachmentData: Attachment): Promise<Car
         if( splitCard[splitCard.length - 1].charAt(0) === "[" || splitCard[splitCard.length - 1].charAt(0) === "(" ) {
             let setcode = stripAndForceLowerCase( splitCard[splitCard.length - 1]);
             cardInfo.set = setcode;
+
+            cardNameArray = splitCard.slice(1, splitCard.length - 1);
+        } else {
+            cardNameArray = splitCard.slice(1);
         }
 
-        let cardNameArray = splitCard.slice(1, splitCard.length - 1);
 
         cardInfo.name = cardNameArray.join(' ');
 
