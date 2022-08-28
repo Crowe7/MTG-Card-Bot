@@ -62,8 +62,8 @@ export const Collection: Command = {
                 interaction.deleteReply()
                 // had to wrap in a set timeout to get the message to not delete itself from above
                 setTimeout(() => {
-                     return interaction.followUp({ content: `${err}`, ephemeral: true});
-                }, 100);
+                    return interaction.followUp({ content: `${err}`, ephemeral: true});
+               }, 140); // this is a random number... Bot crashes below 120
             }
         }
     }

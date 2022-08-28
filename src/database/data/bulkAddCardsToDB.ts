@@ -21,8 +21,6 @@ export const bulkAddToDb = async (discordID: string, bulkData?: Attachment, user
 
     const bulkDataArr = await bulkCardParse(bulkData);
 
-    console.log(bulkDataArr);
-
     const fetchCardToAdd = async (cardName: string, setName: string) => {
         cardName = stripAndForceLowerCase(cardName);
         setName = stripAndForceLowerCase(setName);

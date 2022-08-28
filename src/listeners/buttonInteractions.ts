@@ -92,12 +92,3 @@ const removeButton = {
 
 
 export const buttonInteractions = [addButton, removeButton];
-
-        // this will be used later
-
-        /*
-        let title = stripAndForceLowerCase( interaction.message.embeds[0].title || 'TITLE NOT FOUND');
-        let set = stripFieldText(interaction.message.embeds[0].fields?.find(field => field.name === "Set")?.value);
-        console.log(title, set);
-        const card: any = await fetchCardFromDB(title, set);
-        */

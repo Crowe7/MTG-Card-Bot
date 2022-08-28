@@ -6,7 +6,7 @@ import { removeCopyFromCollectionDB } from "./removeCopyFromCollectionDB";
 export const bulkRemoveFromDB = async (discordId: string, bulkData?: Attachment) => {
 
     if(!bulkData) {
-        throw new Error(" No Attachment provided!");
+        throw new Error(" No cards provided to remove!!");
     }
 
     let succRemoved:string[] = ['CARDS REMOVED SUCCESSFULLY! \n'];
